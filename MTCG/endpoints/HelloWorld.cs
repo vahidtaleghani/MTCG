@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MTCG.endpoints
 {
-    public class HelloWord : IEndpoint
+    public class HelloWorld : IEndpoint
     {
         public bool canProcrss(Request request)
         {

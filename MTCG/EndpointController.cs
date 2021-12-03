@@ -13,7 +13,7 @@ namespace MTCG
 
         public EndpointController()
         {
-            endpointList.Add(new HelloWord());
+            endpointList.Add(new HelloWorld());
         }
 
         public Response getResponse(Request request)
@@ -24,10 +24,13 @@ namespace MTCG
             
             foreach (IEndpoint endpoint in endpointList)
             {
-                if (endpoint.canProcrss(request))
+                if (request.isValid())
                 {
-                    return endpoint.handleRequest(request);
-                }
+                    if (endpoint.canProcrss(request))
+                    {
+                        return endpoint.handleRequest(request);
+                    }
+                }  
             }
             // wenn nicht gefünden 
 
