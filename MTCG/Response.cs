@@ -12,22 +12,8 @@ namespace MTCG
         public enum StatusCode { OK , Bad_Request , Not_Found , Forbideen, Internal_Server_Error }
         public enum Content_Type { PLAIN, JSON, HTML }
 
-        public readonly Dictionary<StatusCode, string> status_code_value = new()
-        {
-            { StatusCode.OK, "200 OK" },
-            { StatusCode.Bad_Request, "400 Bad Request" },
-            { StatusCode.Not_Found, "404 Not Found" },
-            { StatusCode.Forbideen, "403 Forbidden" },
-            { StatusCode.Internal_Server_Error, "500 Internal Server Error" }
-        };
-
-        public readonly Dictionary<Content_Type, string> Content_Type_value = new()
-        {
-            { Content_Type.JSON, "application/json" },
-            { Content_Type.HTML, "text/html" },
-            { Content_Type.PLAIN, "text/plain" }
-
-        };
+        public Dictionary<StatusCode, string> status_code_value { get; set; }
+        public Dictionary<Content_Type, string> Content_Type_value { get; set; }
 
         private StatusCode statusCode;
         private String payload;
@@ -47,16 +33,28 @@ namespace MTCG
             }  
         }
 
-        /*
-        public String contentType
+        public Response() 
         {
-            set
-            {
-                contentType = Content_Type_value[Content_Type.PLAIN];
-            }
-        }*/
 
-        public Response(StatusCode statusCode, String payload) 
+               status_code_value = new Dictionary<StatusCode, string>()
+               {
+                   { StatusCode.OK, "200 OK" },
+                   { StatusCode.Bad_Request, "400 Bad Request" },
+                   { StatusCode.Not_Found, "404 Not Found" },
+                   { StatusCode.Forbideen, "403 Forbidden" },
+                   { StatusCode.Internal_Server_Error, "500 Internal Server Error" }
+               };
+
+                Content_Type_value = new Dictionary<Content_Type, string>()
+                {
+                    { Content_Type.JSON, "application/json" },
+                    { Content_Type.HTML, "text/html" },
+                    { Content_Type.PLAIN, "text/plain" }
+
+                };
+        }
+
+        public void Send(StatusCode statusCode, String payload)
         {
             //????
             this.statusCode = statusCode;

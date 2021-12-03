@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MTCG.Response;
 
 namespace MTCG
 {
@@ -13,7 +14,7 @@ namespace MTCG
 
         public EndpointController()
         {
-            endpointList.Add(new HelloWorld());
+            endpointList.Add(new HelloWord());
         }
 
         public Response getResponse(Request request)
@@ -33,8 +34,8 @@ namespace MTCG
                 }  
             }
             // wenn nicht gefünden 
-
-            Response response = new Response(Response.StatusCode.Not_Found, "404 NOt Found");
+            Response response = new Response();
+            response.Send(Response.StatusCode.Not_Found, response.status_code_value[StatusCode.Not_Found]);
             return response;
              
         }
@@ -50,3 +51,4 @@ namespace MTCG
             }*/
 //Endpunkt ep =  endpunktList.FindIndex();
 //return endpunktList.ElementAt(0).handleRequest(request);
+
