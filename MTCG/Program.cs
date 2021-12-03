@@ -7,6 +7,7 @@ namespace MTCG
 {
     class Program
     {
+        public static EndpointController endpointController = new EndpointController();
 
         private static int PORT = 10001;
         static void Main(string[] args)

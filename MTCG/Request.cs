@@ -11,13 +11,16 @@ namespace MTCG
     public class Request
     {
         public enum METHODE { GET,POST,PUT,DELETE}
+        
         private METHODE method;
-        private String path; //ToDo: URL
+        public String path;
         private String httpVersion;
         private String payload;
         public Hashtable httpHeaders = new Hashtable();
         private Stream inputStream;
         private static int MAX_POST_SIZE = 10 * 1024 * 1024; // 10MB
+
+
         public Request(StreamReader inputStream)
         {
             try

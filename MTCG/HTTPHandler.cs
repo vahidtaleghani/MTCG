@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MTCG.endpoints;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -26,10 +27,10 @@ namespace MTCG
 
                 Request request = new Request(new StreamReader(client.GetStream()));
 
-                Response response = new Response(Response.StatusCode.OK, "hello");
+                Response response = Program.endpointController.getResponse(request);
 
                 response.Send(new StreamWriter(client.GetStream()));
-                
+              
                 
             }
             catch (Exception exc)
