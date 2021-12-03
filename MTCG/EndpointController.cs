@@ -1,4 +1,5 @@
 ﻿using MTCG.endpoints;
+using MTCG.helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,9 +35,8 @@ namespace MTCG
                 }  
             }
             // wenn nicht gefünden 
-            Response response = new Response();
-            response.Send(Response.StatusCode.Not_Found, response.status_code_value[StatusCode.Not_Found]);
-            return response;
+            // wenn unsere funktion ist static denn brauchen wir nicht new schreiben
+            return ResponseCreator.notFound();
              
         }
     }

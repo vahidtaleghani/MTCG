@@ -35,7 +35,6 @@ namespace MTCG
 
         public Response() 
         {
-
                status_code_value = new Dictionary<StatusCode, string>()
                {
                    { StatusCode.OK, "200 OK" },
@@ -53,16 +52,24 @@ namespace MTCG
 
                 };
         }
+        private bool isValid()
+        {
+            return this.statusCode != null && (this.payload == null || this.contentType != null);
+        }
 
-        public void Send(StatusCode statusCode, String payload)
+        public void Send(StatusCode statusCode, String payload, String contentType)
         {
             //????
             this.statusCode = statusCode;
             this.payload = payload;
-            this.contentType = Content_Type_value[Content_Type.HTML];
+            this.contentType = contentType;
         }
+
         public void Send(StreamWriter sw)
         {
+            if(!isValid())
+                throw new Exception("Response not fully created");
+
             string sc = status_code_value[this.statusCode];
             StreamWriter streamwriter = sw;
           
