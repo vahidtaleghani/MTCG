@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MTCG.repository;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -7,9 +8,9 @@ namespace MTCG
 {
     class Program
     {
-        public static EndpointController endpointController = new EndpointController();
-
+     
         private static int PORT = 10001;
+        public static EndpointController endpointController = new EndpointController();
         static void Main(string[] args)
         {
             TcpListener listener = null;
@@ -20,7 +21,12 @@ namespace MTCG
 
                 while (true)
                 {
-                    Console.WriteLine("Server Started\n Listening for Connection on Port "+ PORT+"\n");
+                    Console.WriteLine("Server Started");
+                    //connected to database
+                    Database.GetInstance();
+                    Console.WriteLine("Listening for Connection on Port: " + PORT);
+                    Console.WriteLine("----------------------------------------");
+
                     var socket = listener.AcceptTcpClient();
                     HTTPHandler httphandler = new HTTPHandler(socket);
                     Thread thread = new Thread(httphandler.Process);
