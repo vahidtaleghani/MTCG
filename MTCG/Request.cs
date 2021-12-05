@@ -19,7 +19,11 @@ namespace MTCG
         private METHODE method;
         private Stream inputStream;
 
-
+        
+        public METHODE getMethode()
+        {
+            return this.method;
+        }
         public String getContentType()
         {
             String cT = (String)this.httpHeaders["Content-Type"];
@@ -45,13 +49,13 @@ namespace MTCG
                 if (!Enum.TryParse(typeof(METHODE), tokens[0], out object? method))
                     throw new Exception("invalid methode");
                 
-                method = (METHODE)method;
+                this.method = (METHODE)method;
                 this.path = tokens[1];
                 this.httpVersion = tokens[2];
 
                 // print request in Console
                 Console.WriteLine("Request:");
-                Console.WriteLine("method: " + method);
+                Console.WriteLine("method: " + this.method);
                 Console.WriteLine("path: " + this.path);
                 Console.WriteLine("httpVersion: " + this.httpVersion);
 

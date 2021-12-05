@@ -8,7 +8,7 @@ using Npgsql;
 namespace MTCG.repository
 {
     //Verbindung aufbauen
-    //singleton klasse (kontrollieren die Verbindung nur einmal existiert)
+    //singleton klasse (kontrollieren die Verbindung nur einmal existiert) ??? 
     public class Database
     {
         private static String USERID = "postgres";
@@ -25,7 +25,7 @@ namespace MTCG.repository
         }
 
         private static Database _instance;
-        // static -> wir gereifen ohne objekt
+        // static -> wir gereifen ohne objekt 
         public static Database GetInstance()
         {
             if(_instance == null)
@@ -42,11 +42,23 @@ namespace MTCG.repository
             try
             {
                 NpgsqlConn = new NpgsqlConnection(strConn);
-                NpgsqlConn.Open();
+                //NpgsqlConn.Open();
                 Console.WriteLine("Connected to Database");
-
-                UserDao ud = new UserDao();
-                Console.WriteLine(ud.getUser("bahar").toStringUser());
+                //-----------------
+                List<User> userlist = new UserReps().getAllUsers();
+                foreach (User users in userlist)
+                {
+                    Console.WriteLine((users == null) ? "Not Found" : users.toStringUser());
+                }
+                //--------------
+                bool result = new UserReps().deleteUser("gngcng");
+                 Console.WriteLine(result);
+                //----------------
+                List<User> userlists = new UserReps().getAllUsers();
+                foreach (User users in userlists)
+                {
+                    Console.WriteLine((users == null) ? "Not Found" : users.toStringUser());
+                }
             }
             catch (Exception exc)
             {

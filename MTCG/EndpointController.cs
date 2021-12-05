@@ -1,4 +1,5 @@
 ﻿using MTCG.endpoints;
+using MTCG.endpoints.users;
 using MTCG.helper;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace MTCG
 
         public EndpointController()
         {
+            endpointList.Add(new PostUsers());
             endpointList.Add(new HelloWord());
         }
 
