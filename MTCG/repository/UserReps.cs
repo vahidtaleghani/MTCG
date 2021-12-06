@@ -76,9 +76,28 @@ namespace MTCG.repository
             return userlist;
         }
 
-        public bool addUser(User user)
+        public bool addUser(String username,String password)
         {
-            return false;
+            string query = string.Format("INSERT INTO users (username, name ,password, token , bio , image) " +
+                "VALUES ('{0}','{1}', '{2}','{3}','{4}','{5}')",
+                username, username, password, username + "-mtcgToken", null, null);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                int dataReader = command.ExecuteNonQuery();
+                if (dataReader == 0)
+                {
+                    this.NpgsqlConn.Close();
+                    return false;
+                }
+                this.NpgsqlConn.Close();
+                return true;
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("error occurred: " + exc.Message);
+                throw;
+            }
         }
         
         public bool deleteUser(String username)

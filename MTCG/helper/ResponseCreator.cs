@@ -22,5 +22,12 @@ namespace MTCG.helper
             response.Send(Response.StatusCode.OK, response.status_code_value[StatusCode.OK], response.Content_Type_value[Content_Type.HTML]);
             return response;
         }
+
+        public static Response jsonInvalid()
+        {
+            Response response = new Response();
+            response.Send(Response.StatusCode.Bad_Request, response.status_code_value[StatusCode.Bad_Request], response.Content_Type_value[Content_Type.HTML]);
+            return response;
+        }
     }
 }

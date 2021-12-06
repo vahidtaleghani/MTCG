@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -31,7 +32,7 @@ namespace MTCG
         }
         public String getPayload()
         {
-            return this.payload ;
+            return this.payload;
         }
         private const int BUF_SIZE = 4096;
         public Request(StreamReader inputStream)
@@ -82,7 +83,7 @@ namespace MTCG
                         throw new Exception("Payload was not the expected lenght " + hasRead);
                     this.payload = new String(buf);
                     //ToDo
-                    Console.WriteLine("payload:" + this.payload.Length);
+                    Console.WriteLine("payload:" + this.payload);
                 }
                 
             }

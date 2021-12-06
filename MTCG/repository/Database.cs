@@ -42,23 +42,17 @@ namespace MTCG.repository
             try
             {
                 NpgsqlConn = new NpgsqlConnection(strConn);
-                //NpgsqlConn.Open();
                 Console.WriteLine("Connected to Database");
-                //-----------------
-                List<User> userlist = new UserReps().getAllUsers();
-                foreach (User users in userlist)
-                {
-                    Console.WriteLine((users == null) ? "Not Found" : users.toStringUser());
-                }
-                //--------------
-                bool result = new UserReps().deleteUser("gngcng");
-                 Console.WriteLine(result);
-                //----------------
-                List<User> userlists = new UserReps().getAllUsers();
-                foreach (User users in userlists)
-                {
-                    Console.WriteLine((users == null) ? "Not Found" : users.toStringUser());
-                }
+               
+                ////-----------------
+                //List<User> userlist = new UserReps().getAllUsers();
+                //foreach (User users in userlist)
+                //{
+                //    Console.WriteLine((users == null) ? "Not Found" : users.toStringUser());
+                //}
+                ////--------------
+                //bool result = new UserReps().deleteUser("gngcng");
+                //Console.WriteLine(result);   
             }
             catch (Exception exc)
             {
