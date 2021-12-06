@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MTCG.helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,10 @@ namespace MTCG.endpoints.users
 
         public Response handleRequest(Request request)
         {
-            Response response = new Response();
-            response.Send(Response.StatusCode.OK, response.status_code_value[StatusCode.OK], response.Content_Type_value[Content_Type.HTML]);
-            return response;
+            Console.WriteLine(request.getPayload());
+            return ResponseCreator.ok();
         }
+
+
     }
 }

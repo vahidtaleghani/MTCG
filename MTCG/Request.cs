@@ -29,7 +29,11 @@ namespace MTCG
             String cT = (String)this.httpHeaders["Content-Type"];
             return cT;
         }
-
+        public String getPayload()
+        {
+            return this.payload ;
+        }
+        private const int BUF_SIZE = 4096;
         public Request(StreamReader inputStream)
         {
             try
@@ -62,33 +66,25 @@ namespace MTCG
                 //read header
                 while (!streamreader.EndOfStream && (line = streamreader.ReadLine()!) != "")
                 {
-                    int separator = line.IndexOf(':');
-
-                    if (separator == -1)
-                        throw new Exception("invalid http header line: " + line);
-
-                    String name = line.Substring(0, separator);
-                    int pos = separator + 1;
-
-                    while ((pos < line.Length) && (line[pos] == ' '))
-                        pos++; // strip any spaces
-
-                    string value = line.Substring(pos, line.Length - pos);
-                    Console.WriteLine("{0}:{1}", name, value);
-                    httpHeaders[name] = value;
-
-                    if (this.httpHeaders.ContainsKey("Content-Type") && this.httpHeaders.ContainsKey("Content-Length"))
+                    String[] split = line.Split(": ", 2);
+                    if (split.Length == 2)
                     {
-                        int content_len = Convert.ToInt32(this.httpHeaders["Content-Length"]);
-                        char[] buf = new char[content_len];
-                        int hasRead = inputStream.Read(buf, 0, content_len);
-                        if (hasRead != content_len)
-                            throw new Exception("Payload was not the expected lenght " + hasRead);
-                        this.payload = new String(buf);
-                        //ToDo
-                        Console.WriteLine("payload:" + this.payload);
+                        this.httpHeaders.Add(split[0], split[1]);
                     }
                 }
+
+                if (this.httpHeaders.ContainsKey("Content-Type") && this.httpHeaders.ContainsKey("Content-Length"))
+                {
+                    int content_len = Convert.ToInt32(this.httpHeaders["Content-Length"]);
+                    char[] buf = new char[content_len];
+                    int hasRead = inputStream.Read(buf, 0, Math.Min(BUF_SIZE, content_len));
+                    if (hasRead != content_len)
+                        throw new Exception("Payload was not the expected lenght " + hasRead);
+                    this.payload = new String(buf);
+                    //ToDo
+                    Console.WriteLine("payload:" + this.payload.Length);
+                }
+                
             }
             catch (Exception exc)
             {
