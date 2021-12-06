@@ -8,12 +8,12 @@ namespace MTCG.repository
 {
     public class User
     {
-        private String username {get; set;}
-        private String name { get; set; }
-        private String password { get; set; }
-        private String token { get; set; }
-        private String bio { get; set; }
-        private String image { get; set; }
+        public String username {get;private set;}
+        public String name { get; private set; }
+        public String password { get; private set; }
+        public String token { get; private set; }
+        public String bio { get; private set; }
+        public String image { get; private set; }
         
         public User(String username, String name ,String password, String token, String bio, String image)
         {

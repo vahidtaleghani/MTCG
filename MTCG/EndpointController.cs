@@ -1,11 +1,8 @@
 ﻿using MTCG.endpoints;
+using MTCG.endpoints.session;
 using MTCG.endpoints.users;
 using MTCG.helper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static MTCG.Response;
 
 namespace MTCG
@@ -16,8 +13,9 @@ namespace MTCG
 
         public EndpointController()
         {
-            endpointList.Add(new PostUsers());
             endpointList.Add(new HelloWord());
+            endpointList.Add(new PostUsers());
+            endpointList.Add(new PostSession());
         }
 
         public Response getResponse(Request request)

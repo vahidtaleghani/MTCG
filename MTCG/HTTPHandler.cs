@@ -24,14 +24,19 @@ namespace MTCG
             TcpClient client = socket;
             try
             {
+                Console.WriteLine("| Connection opened");
 
                 Request request = new Request(new StreamReader(client.GetStream()));
 
                 Response response = Program.endpointController.getResponse(request);
 
                 response.Send(new StreamWriter(client.GetStream()));
-              
-                
+
+                Console.WriteLine("| Connection closed");
+
+                Console.WriteLine("----------------------------------------");
+
+
             }
             catch (Exception exc)
             {

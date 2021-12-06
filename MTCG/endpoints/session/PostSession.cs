@@ -2,12 +2,11 @@
 using MTCG.repository;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using static MTCG.Response;
 
-namespace MTCG.endpoints.users
+namespace MTCG.endpoints.session
 {
-    public class PostUsers : IEndpoint
+    public class PostSession : IEndpoint
     {
         private Userobject reqUsers;
 
@@ -20,8 +19,8 @@ namespace MTCG.endpoints.users
         public bool canProcrss(Request request)
         {
             Response response = new Response();
-            return request.path.Equals("/users") 
-                && request.getContentType().Equals(response.Content_Type_value[Content_Type.JSON]) == true 
+            return request.path.Equals("/session")
+                && request.getContentType().Equals(response.Content_Type_value[Content_Type.JSON]) == true
                 && request.getMethode().Equals(Request.METHODE.POST);
         }
 
@@ -30,18 +29,23 @@ namespace MTCG.endpoints.users
             try
             {
                 this.reqUsers = JsonConvert.DeserializeObject<Userobject>(request.getPayload());
-                if(String.IsNullOrEmpty(this.reqUsers.Username) || String.IsNullOrEmpty(this.reqUsers.Password))
+
+                if (String.IsNullOrEmpty(this.reqUsers.Username) || String.IsNullOrEmpty(this.reqUsers.Password))
                     return ResponseCreator.jsonInvalid();
-                if(!new UserReps().addUser(this.reqUsers.Username, this.reqUsers.Password))
-                    return ResponseCreator.jsonInvalid("username is existiert");
-                Console.WriteLine("  User with name : " + this.reqUsers.Username + " and password: " + this.reqUsers.Password + " added");
+                String result = new UserReps().getToken(this.reqUsers.Username, this.reqUsers.Password);
+
+                if(result == null)
+                    return ResponseCreator.jsonInvalid();
+                if (result.Equals("Password is Wrong"))
+                    return ResponseCreator.forbidden(result);
+                Console.WriteLine("  User with name : " + this.reqUsers.Username + " and token: " + result + " is loggedin");
             }
             catch (Exception)
             {
                 return ResponseCreator.jsonInvalid();
             }
-            return ResponseCreator.ok();
+
+            return ResponseCreator.ok("You are logged in");
         }
-    
     }
 }

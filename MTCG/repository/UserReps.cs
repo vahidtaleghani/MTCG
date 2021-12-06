@@ -95,8 +95,8 @@ namespace MTCG.repository
             }
             catch (Exception exc)
             {
-                Console.WriteLine("error occurred: " + exc.Message);
-                throw;
+                this.NpgsqlConn.Close();
+                return false;
             }
         }
         
@@ -121,6 +121,16 @@ namespace MTCG.repository
                 Console.WriteLine("error occurred: " + exc.Message);
                 throw;
             }   
+        }
+        
+        public String getToken(String username, String password)
+        {
+            User user = getUser(username);
+            if (user == null)
+                return null;
+            if (password != user.password)
+                return "Password is Wrong";
+            return user.token;
         }
         /*
         public bool update()

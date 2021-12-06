@@ -34,7 +34,7 @@ namespace MTCG
         {
             return this.payload;
         }
-        private const int BUF_SIZE = 4096;
+ 
         public Request(StreamReader inputStream)
         {
             try
@@ -59,10 +59,9 @@ namespace MTCG
                 this.httpVersion = tokens[2];
 
                 // print request in Console
-                Console.WriteLine("Request:");
-                Console.WriteLine("method: " + this.method);
-                Console.WriteLine("path: " + this.path);
-                Console.WriteLine("httpVersion: " + this.httpVersion);
+                Console.WriteLine("  method: " + this.method);
+                Console.WriteLine("  path: " + this.path);
+                //Console.WriteLine("httpVersion: " + this.httpVersion);
 
                 //read header
                 while (!streamreader.EndOfStream && (line = streamreader.ReadLine()!) != "")
@@ -78,12 +77,12 @@ namespace MTCG
                 {
                     int content_len = Convert.ToInt32(this.httpHeaders["Content-Length"]);
                     char[] buf = new char[content_len];
-                    int hasRead = inputStream.Read(buf, 0, Math.Min(BUF_SIZE, content_len));
+                    int hasRead = inputStream.Read(buf, 0,content_len);
                     if (hasRead != content_len)
                         throw new Exception("Payload was not the expected lenght " + hasRead);
                     this.payload = new String(buf);
                     //ToDo
-                    Console.WriteLine("payload:" + this.payload);
+                    //Console.WriteLine("payload:" + this.payload);
                 }
                 
             }

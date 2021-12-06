@@ -9,7 +9,7 @@ namespace MTCG
 {
     public class Response
     {
-        public enum StatusCode { OK , Bad_Request , Not_Found , Forbideen, Internal_Server_Error }
+        public enum StatusCode { OK , Bad_Request , Not_Found , forbidden, Internal_Server_Error }
         public enum Content_Type { PLAIN, JSON, HTML }
 
         public Dictionary<StatusCode, string> status_code_value { get; set; }
@@ -40,7 +40,7 @@ namespace MTCG
                    { StatusCode.OK, "200 OK" },
                    { StatusCode.Bad_Request, "400 Bad Request" },
                    { StatusCode.Not_Found, "404 Not Found" },
-                   { StatusCode.Forbideen, "403 Forbidden" },
+                   { StatusCode.forbidden, "403 forbidden" },
                    { StatusCode.Internal_Server_Error, "500 Internal Server Error" }
                };
 
@@ -59,7 +59,7 @@ namespace MTCG
 
         public void Send(StatusCode statusCode, String payload, String contentType)
         {
-            //????
+            //--
             this.statusCode = statusCode;
             this.payload = payload;
             this.contentType = contentType;
@@ -68,7 +68,7 @@ namespace MTCG
         public void Send(StreamWriter sw)
         {
             if(!isValid())
-                throw new Exception("Response not fully created");
+                throw new Exception("Response not full created");
 
             string sc = status_code_value[this.statusCode];
             StreamWriter streamwriter = sw;
