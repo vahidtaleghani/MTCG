@@ -9,7 +9,7 @@ namespace MTCG
 {
     public class Response
     {
-        public enum StatusCode { OK , Bad_Request , Not_Found , forbidden, Internal_Server_Error }
+        public enum StatusCode { OK , Bad_Request , Not_Found , Forbidden, Internal_Server_Error }
         public enum Content_Type { PLAIN, JSON, HTML }
 
         public Dictionary<StatusCode, string> status_code_value { get; set; }
@@ -40,7 +40,7 @@ namespace MTCG
                    { StatusCode.OK, "200 OK" },
                    { StatusCode.Bad_Request, "400 Bad Request" },
                    { StatusCode.Not_Found, "404 Not Found" },
-                   { StatusCode.forbidden, "403 forbidden" },
+                   { StatusCode.Forbidden, "403 Forbidden" },
                    { StatusCode.Internal_Server_Error, "500 Internal Server Error" }
                };
 

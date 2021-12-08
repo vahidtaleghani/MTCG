@@ -9,8 +9,9 @@ namespace MTCG.repository
 {
     public class UserReps
     {
-
         private NpgsqlConnection NpgsqlConn;
+        private String username;
+   
         public UserReps()
         {
             this.NpgsqlConn = Database.NpgsqlConn;
@@ -19,7 +20,6 @@ namespace MTCG.repository
 
         public User getUser(String username)
         {
-            
             string query = string.Format("SELECT * from users where username='{0}'", username);
             try
             {
@@ -39,7 +39,6 @@ namespace MTCG.repository
             catch (Exception exc)
             {
                 Console.WriteLine("error occurred: " + exc.Message); 
-                throw;
             }
             this.NpgsqlConn.Close();
             return null;
@@ -108,29 +107,50 @@ namespace MTCG.repository
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
                 int dataReader = command.ExecuteNonQuery();
 
-                if (dataReader == 0)
+                if (dataReader != 0)
                 {
                     this.NpgsqlConn.Close();
-                    return false;
+                    return true;
                 }
-                this.NpgsqlConn.Close();
-                return true;
             }
             catch (Exception exc)
             {
                 Console.WriteLine("error occurred: " + exc.Message);
-                throw;
-            }   
+            }
+            this.NpgsqlConn.Close();
+            return false;
         }
         
         public String getToken(String username, String password)
         {
             User user = getUser(username);
+            this.NpgsqlConn.Close();
             if (user == null)
                 return null;
             if (password != user.password)
                 return "Password is Wrong";
             return user.token;
+
+        }
+
+        public String getUsernameByToken(String token)
+        {
+            string query = string.Format("SELECT * from users where token='{0}'", token);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                NpgsqlDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                    this.username = dataReader["username"].ToString();
+                this.NpgsqlConn.Close();
+                return this.username;
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("error occurred: " + exc.Message);
+            }
+            this.NpgsqlConn.Close();
+            return null;
         }
         /*
         public bool update()

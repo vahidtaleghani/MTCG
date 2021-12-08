@@ -16,6 +16,7 @@ namespace MTCG
             endpointList.Add(new HelloWord());
             endpointList.Add(new PostUsers());
             endpointList.Add(new PostSession());
+            endpointList.Add(new GetUsers());
         }
 
         public Response getResponse(Request request)

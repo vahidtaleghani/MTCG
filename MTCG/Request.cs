@@ -17,7 +17,7 @@ namespace MTCG
         public Hashtable httpHeaders = new Hashtable();
         private String httpVersion;
         private String payload;
-        private METHODE method;
+        public METHODE method;
         private Stream inputStream;
 
         
@@ -34,7 +34,10 @@ namespace MTCG
         {
             return this.payload;
         }
- 
+        public Hashtable getHeaders()
+        {
+            return this.httpHeaders;
+        }
         public Request(StreamReader inputStream)
         {
             try

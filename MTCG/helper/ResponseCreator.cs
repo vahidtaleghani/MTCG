@@ -43,7 +43,21 @@ namespace MTCG.helper
         public static Response forbidden(String message)
         {
             Response response = new Response();
-            response.Send(Response.StatusCode.forbidden, message, response.Content_Type_value[Content_Type.HTML]);
+            response.Send(Response.StatusCode.Forbidden, message, response.Content_Type_value[Content_Type.HTML]);
+            return response;
+        }
+
+        public static Response forbidden()
+        {
+            Response response = new Response();
+            response.Send(Response.StatusCode.Forbidden, response.status_code_value[StatusCode.Forbidden], response.Content_Type_value[Content_Type.HTML]);
+            return response;
+        }
+
+        public static Response badRequest(String message)
+        {
+            Response response = new Response();
+            response.Send(Response.StatusCode.Bad_Request, message, response.Content_Type_value[Content_Type.HTML]);
             return response;
         }
     }
