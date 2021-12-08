@@ -20,7 +20,6 @@ namespace MTCG.endpoints.users
         {
             Response response = new Response();
                 return request.path.Equals("/users")
-                    && (request.getContentType() == null) ? false : request.getContentType().Equals(response.Content_Type_value[Content_Type.JSON]) == true
                     && request.getMethode().Equals(Request.METHODE.POST);
         }
 

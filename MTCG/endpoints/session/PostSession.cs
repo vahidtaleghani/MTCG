@@ -19,8 +19,7 @@ namespace MTCG.endpoints.session
         public bool canProcrss(Request request)
         {
             Response response = new Response();
-            return request.path.Equals("/session")
-                && request.getContentType().Equals(response.Content_Type_value[Content_Type.JSON]) == true
+            return request.path.Equals("/sessions")
                 && request.getMethode().Equals(Request.METHODE.POST);
         }
 
@@ -29,7 +28,6 @@ namespace MTCG.endpoints.session
             try
             {
                 this.reqUsers = JsonConvert.DeserializeObject<Userobject>(request.getPayload());
-
                 if (String.IsNullOrEmpty(this.reqUsers.Username) || String.IsNullOrEmpty(this.reqUsers.Password))
                     return ResponseCreator.jsonInvalid();
                 String result = new UserReps().getToken(this.reqUsers.Username, this.reqUsers.Password);
