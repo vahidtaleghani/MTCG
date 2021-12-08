@@ -1,9 +1,7 @@
 ﻿using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MTCG.repository
 {
@@ -92,7 +90,7 @@ namespace MTCG.repository
                 this.NpgsqlConn.Close();
                 return true;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 this.NpgsqlConn.Close();
                 return false;
@@ -152,11 +150,28 @@ namespace MTCG.repository
             this.NpgsqlConn.Close();
             return null;
         }
-        /*
-        public bool update()
+      
+        public bool updateUser(String username,String name, String bio, String image)
         {
-
+            string query = string.Format("UPDATE users SET name='{0}' ,bio='{1}' , image='{2}' WHERE username='{3}'",name, bio, image, username);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                int dataReader = command.ExecuteNonQuery();
+                if (dataReader == 0)
+                {
+                    this.NpgsqlConn.Close();
+                    return false;
+                }
+                this.NpgsqlConn.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+                this.NpgsqlConn.Close();
+                return false;
+            }
         }
-        */
+        
     }
 }

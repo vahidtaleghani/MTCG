@@ -17,6 +17,7 @@ namespace MTCG
             endpointList.Add(new PostUsers());
             endpointList.Add(new PostSession());
             endpointList.Add(new GetUsers());
+            endpointList.Add(new PutUsers());
         }
 
         public Response getResponse(Request request)

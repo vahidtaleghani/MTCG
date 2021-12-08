@@ -1,11 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MTCG
 {
@@ -18,7 +14,6 @@ namespace MTCG
         private String httpVersion;
         private String payload;
         public METHODE method;
-        private Stream inputStream;
 
         
         public METHODE getMethode()

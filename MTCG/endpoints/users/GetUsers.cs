@@ -1,13 +1,7 @@
 ﻿using MTCG.helper;
-using MTCG.repository;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using static MTCG.Response;
+
 
 namespace MTCG.endpoints.users
 {
@@ -31,10 +25,7 @@ namespace MTCG.endpoints.users
                     return ResponseCreator.forbidden();
 
                 String[] substrings = Regex.Split(request.path, this.pattern);
-                if (substrings[0] == null)
-                    return ResponseCreator.notFound();
-
-                if (!user.Equals(substrings[1]))
+                if (substrings[0] == null || !user.Equals(substrings[1]))
                     return ResponseCreator.notFound();
             }
             catch (Exception)

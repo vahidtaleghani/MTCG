@@ -2,7 +2,6 @@
 using MTCG.repository;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using static MTCG.Response;
 
 namespace MTCG.endpoints.users
@@ -20,17 +19,9 @@ namespace MTCG.endpoints.users
         public bool canProcrss(Request request)
         {
             Response response = new Response();
-            try
-            {
                 return request.path.Equals("/users")
-                    && request.getContentType().Equals(response.Content_Type_value[Content_Type.JSON]) == true
+                    && (request.getContentType() == null) ? false : request.getContentType().Equals(response.Content_Type_value[Content_Type.JSON]) == true
                     && request.getMethode().Equals(Request.METHODE.POST);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-      
         }
 
         public Response handleRequest(Request request)
