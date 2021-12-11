@@ -9,7 +9,8 @@ namespace MTCG.repository
     {
         private NpgsqlConnection NpgsqlConn;
         private String username;
-   
+        private int coin;
+
         public UserReps()
         {
             this.NpgsqlConn = Database.NpgsqlConn;
@@ -71,7 +72,6 @@ namespace MTCG.repository
             catch (Exception exc)
             {
                 Console.WriteLine("error occurred: " + exc.Message);
-                throw;
             }
             this.NpgsqlConn.Close();
             return userlist;
@@ -176,6 +176,47 @@ namespace MTCG.repository
                 return false;
             }
         }
-        
+
+        public bool updateCoinsUser(String username, int coins)
+        {
+            string query = string.Format("UPDATE users SET coin='{0}' WHERE username='{1}'", coins, username);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                int dataReader = command.ExecuteNonQuery();
+                if (dataReader == 0)
+                {
+                    this.NpgsqlConn.Close();
+                    return false;
+                }
+                this.NpgsqlConn.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+                this.NpgsqlConn.Close();
+                return false;
+            }
+        }
+
+        public int getCoinsByUsername(String username)
+        {
+            string query = string.Format("SELECT coin from users where username='{0}'", username);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                NpgsqlDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                    this.coin = Convert.ToInt32(dataReader["coin"]);
+                this.NpgsqlConn.Close();
+                return this.coin;
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("error occurred: " + exc.Message);
+            }
+            this.NpgsqlConn.Close();
+            return -1;
+        }
     }
 }

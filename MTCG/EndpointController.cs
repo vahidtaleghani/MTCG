@@ -1,6 +1,8 @@
 ﻿using MTCG.endpoints;
+using MTCG.endpoints.cards;
 using MTCG.endpoints.packages;
 using MTCG.endpoints.session;
+using MTCG.endpoints.transactions;
 using MTCG.endpoints.users;
 using MTCG.helper;
 using System.Collections.Generic;
@@ -14,12 +16,13 @@ namespace MTCG
 
         public EndpointController()
         {
-            endpointList.Add(new HelloWord());
             endpointList.Add(new PostUsers());
             endpointList.Add(new PostSession());
             endpointList.Add(new GetUsers());
             endpointList.Add(new PutUsers());
             endpointList.Add(new PostPackages());
+            endpointList.Add(new PostTransactions());
+            endpointList.Add(new GetCards());
         }
 
         public Response getResponse(Request request)

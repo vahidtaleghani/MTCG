@@ -10,13 +10,13 @@ namespace MTCG.repository.entity
     {
         public String id { get; private set; }
         public String name { get; private set; }
-        public int damage { get; private set; }
-        public String packageId { get; private set; }
+        public double damage { get; private set; }
+        public int packageId { get; private set; }
         public String username { get; private set; }
         public bool deck { get; private set; }
 
 
-        public Card(String id, String name, int damage, String packageId, String username, bool deck)
+        public Card(String id, String name, double damage, int packageId, String username, bool deck)
         {
             this.id = id;
             this.name = name;

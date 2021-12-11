@@ -60,5 +60,27 @@ namespace MTCG.helper
             response.Send(Response.StatusCode.Bad_Request, message, response.Content_Type_value[Content_Type.HTML]);
             return response;
         }
+        public static Response okJsonPayload(String jsonString)
+        {
+
+            Response response = new Response();
+            response.Send(Response.StatusCode.OK, jsonString, response.Content_Type_value[Content_Type.JSON]);
+            return response;
+            /*
+            ObjectMapper objectMapper = new ObjectMapper();
+            try
+            {
+                String json = objectMapper.writeValueAsString(object);
+                return new Response()
+                        .setStatusCode(Response.StatusCode.OK)
+                        .setPayload(json)
+                        .setContentType(ContentType.JSON);
+            }
+            catch (JsonProcessingException e)
+            {
+                e.printStackTrace();
+                return internalServerError();
+            }*/
+        }
     }
 }
