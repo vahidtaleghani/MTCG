@@ -31,7 +31,9 @@ namespace MTCG.repository
                         dataReader["password"].ToString(),
                         dataReader["token"].ToString(),
                         dataReader["bio"].ToString(),
-                        dataReader["image"].ToString()
+                        dataReader["image"].ToString(),
+                        Convert.ToInt32(dataReader["elo"]),
+                        Convert.ToInt32(dataReader["coin"])
                         );
             }
             catch (Exception exc)
@@ -59,7 +61,9 @@ namespace MTCG.repository
                         dataReader["password"].ToString(),
                         dataReader["token"].ToString(),
                         dataReader["bio"].ToString(),
-                        dataReader["image"].ToString()
+                        dataReader["image"].ToString(),
+                        Convert.ToInt32(dataReader["elo"]),
+                        Convert.ToInt32(dataReader["coin"])
                         ));
 
                 }
@@ -75,9 +79,9 @@ namespace MTCG.repository
 
         public bool addUser(String username,String password)
         {
-            string query = string.Format("INSERT INTO users (username, name ,password, token , bio , image) " +
-                "VALUES ('{0}','{1}', '{2}','{3}','{4}','{5}')",
-                username, username, password, username + "-mtcgToken", null, null);
+            string query = string.Format("INSERT INTO users (username, name ,password, token , bio , image, elo , coin) " +
+                "VALUES ('{0}','{1}', '{2}','{3}','{4}','{5}','{6}','{7}')",
+                username, username, password, username + "-mtcgToken", null, null, 100 , 20);
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);

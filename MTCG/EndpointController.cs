@@ -1,4 +1,5 @@
 ﻿using MTCG.endpoints;
+using MTCG.endpoints.packages;
 using MTCG.endpoints.session;
 using MTCG.endpoints.users;
 using MTCG.helper;
@@ -18,6 +19,7 @@ namespace MTCG
             endpointList.Add(new PostSession());
             endpointList.Add(new GetUsers());
             endpointList.Add(new PutUsers());
+            endpointList.Add(new PostPackages());
         }
 
         public Response getResponse(Request request)
