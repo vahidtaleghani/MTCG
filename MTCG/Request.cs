@@ -79,7 +79,6 @@ namespace MTCG
                     if (hasRead != content_len)
                         throw new Exception("Payload was not the expected lenght " + hasRead);
                     this.payload = new String(buf);
-                    //ToDo
                     //Console.WriteLine("payload:" + this.payload);
                 }
                 
