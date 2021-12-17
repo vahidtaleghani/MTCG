@@ -3,6 +3,7 @@ using MTCG.endpoints.cards;
 using MTCG.endpoints.deck;
 using MTCG.endpoints.packages;
 using MTCG.endpoints.session;
+using MTCG.endpoints.stats;
 using MTCG.endpoints.transactions;
 using MTCG.endpoints.users;
 using MTCG.helper;
@@ -26,6 +27,7 @@ namespace MTCG
             endpointList.Add(new GetCards());
             endpointList.Add(new GetDeck());
             endpointList.Add(new PutDeck());
+            endpointList.Add(new GetStats());
         }
 
         public Response getResponse(Request request)

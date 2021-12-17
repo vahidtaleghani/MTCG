@@ -1,4 +1,5 @@
-﻿using MTCG.repository.entity;
+﻿using MTCG.data;
+using MTCG.repository.entity;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,7 @@ namespace MTCG.repository
         private NpgsqlConnection NpgsqlConn;
         public CardReps()
         {
-            this.NpgsqlConn = Database.NpgsqlConn;
-            NpgsqlConn.Open();
+            this.NpgsqlConn = new NpgsqlConn().getnpgsqlConn();
         }
         public List<Card> getAllCardsByUsername(String username)
         {
@@ -19,7 +19,6 @@ namespace MTCG.repository
             List<Card> cardlist = new List<Card>();
             try
             {
-
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
                 NpgsqlDataReader dataReader = command.ExecuteReader();
                 while (dataReader.Read())
@@ -36,7 +35,6 @@ namespace MTCG.repository
             {
                 Console.WriteLine("error occurred: " + exc.Message);
             }
-            this.NpgsqlConn.Close();
             return cardlist;
         }
         public bool addCard(String id, String name, float damage, int packageId)
@@ -49,20 +47,15 @@ namespace MTCG.repository
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
                 int dataReader = command.ExecuteNonQuery();
                 if (dataReader == 0)
-                {
-                    this.NpgsqlConn.Close();
                     return false;
-                }
-                this.NpgsqlConn.Close();
                 return true;
             }
             catch (Exception)
             {
-                this.NpgsqlConn.Close();
                 return false;
             }
         }
-        public int packageId()
+        public int getLastpackageId()
         {
             string query = string.Format("Select package_id as package_id from cards GROUP BY package_id order by package_id desc limit 1");
             try
@@ -70,17 +63,11 @@ namespace MTCG.repository
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
                 NpgsqlDataReader dataReader = command.ExecuteReader();
                 while (dataReader.Read())
-                {
-                    int packageId = Convert.ToInt32(dataReader["package_id"]);
-                    this.NpgsqlConn.Close();
-                    return packageId;  
-                }
-                this.NpgsqlConn.Close();
+                    return Convert.ToInt32(dataReader["package_id"]);
                 return 0;
             }
             catch (Exception)
             {
-                this.NpgsqlConn.Close();
                 return -1;
             }
         }
@@ -92,36 +79,28 @@ namespace MTCG.repository
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
                 int dataReader = command.ExecuteNonQuery();
                 if (dataReader == 0)
-                {
-                    this.NpgsqlConn.Close();
                     return false;
-                }
-                this.NpgsqlConn.Close();
                 return true;
             }
             catch (Exception)
             {
-                this.NpgsqlConn.Close();
                 return false;
             }
         }
-        public List<int> getAllFreePackageId()
+        public int getFirstFreePackageId()
         {
-            List<int> list = new List<int>();
-            string query = string.Format("SELECT package_id from cards where username = '' GROUP BY package_id");
+            string query = string.Format("SELECT package_id from cards where username = '' GROUP BY package_id order by package_id limit 1");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
                 NpgsqlDataReader dataReader = command.ExecuteReader();
                 while (dataReader.Read())
-                    list.Add(Convert.ToInt32(dataReader["package_id"]));
-                this.NpgsqlConn.Close();
-                return list;
+                    return Convert.ToInt32(dataReader["package_id"]);
+                return 0;
             }
             catch (Exception)
             {
-                this.NpgsqlConn.Close();
-                return null;
+                return -1;
             }
         }
         public List<Card> getDeckByUsername(String username)
@@ -147,7 +126,6 @@ namespace MTCG.repository
             {
                 Console.WriteLine("error occurred: " + exc.Message);
             }
-            this.NpgsqlConn.Close();
             return cardlist;
         }
         public bool updateDeckByUsername(String id, string username)
@@ -158,16 +136,11 @@ namespace MTCG.repository
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
                 int dataReader = command.ExecuteNonQuery();
                 if (dataReader == 0)
-                {
-                    this.NpgsqlConn.Close();
                     return false;
-                }
-                this.NpgsqlConn.Close();
                 return true;
             }
             catch (Exception)
             {
-                this.NpgsqlConn.Close();
                 return false;
             }
         }
@@ -179,16 +152,11 @@ namespace MTCG.repository
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
                 NpgsqlDataReader dataReader = command.ExecuteReader();
                 if (dataReader.Read() ==false)
-                {
-                    this.NpgsqlConn.Close();
                     return false;
-                }
-                this.NpgsqlConn.Close();
                 return true;
             }
             catch (Exception)
             {
-                this.NpgsqlConn.Close();
                 return false;
             }
         }

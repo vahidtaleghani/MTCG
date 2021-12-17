@@ -37,7 +37,7 @@ namespace MTCG.endpoints.users
 
                 String[] substrings = Regex.Split(request.path, this.pattern);
                 if (substrings[0] == null || !user.Equals(substrings[1]))
-                    return ResponseCreator.notFound();
+                    return ResponseCreator.forbidden("This token does not belong to the user");
 
                 // Kontrolieren Json
                 try

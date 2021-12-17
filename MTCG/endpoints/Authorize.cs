@@ -18,7 +18,6 @@ namespace MTCG.endpoints
             token = token.Substring(6);
 
             return new UserReps().getUsernameByToken(token);
-            
         }
     }
 }

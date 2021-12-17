@@ -30,12 +30,12 @@ namespace MTCG.endpoints.transactions
                 if(coin <= 0)
                     return ResponseCreator.forbidden("This user does not have enough Coins");
 
-                List<int> packagIdList = new CardReps().getAllFreePackageId();
-                if(packagIdList.Count() == 0)
+                int packagId = new CardReps().getFirstFreePackageId();
+                if(packagId == 0)
                     return ResponseCreator.forbidden("There is no empty package");
-                int randomPackageId = new Random().Next(packagIdList.Count);
-
-                if(new CardReps().updateUsernameOfCards(username, packagIdList[randomPackageId]))
+                //take package random
+                //int randomPackageId = new Random().Next(packagIdList.Count);
+                if(new CardReps().updateUsernameOfCards(username, packagId))
                     if (new UserReps().updateCoinsUser(username, (coin - 5)))
                         return ResponseCreator.ok();
             }

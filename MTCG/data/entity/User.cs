@@ -14,10 +14,11 @@ namespace MTCG.repository
         public String token { get; private set; }
         public String bio { get; private set; }
         public String image { get; private set; }
-        public int elo { get; private set; }
         public int coin { get; private set; }
 
-        public User(String username, String name ,String password, String token, String bio, String image, int elo, int coin)
+
+
+        public User(String username, String name ,String password, String token, String bio, String image, int coin)
         {
             this.username = username;
             this.name = name;
@@ -25,8 +26,8 @@ namespace MTCG.repository
             this.token = token;
             this.bio = bio;
             this.image = image;
-            this.elo = elo;
             this.coin = coin;
+  
         }
 
         public String toStringUser()
