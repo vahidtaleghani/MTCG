@@ -21,7 +21,6 @@ namespace MTCG.endpoints.cards
 
         public bool canProcrss(Request request)
         {
-            Response response = new Response();
             return request.path.Equals("/cards")
                 && request.getMethode().Equals(Request.METHODE.GET);
         }

@@ -18,7 +18,6 @@ namespace MTCG.endpoints.users
 
         public bool canProcrss(Request request)
         {
-            Response response = new Response();
                 return request.path.Equals("/users")
                     && request.getMethode().Equals(Request.METHODE.POST);
         }

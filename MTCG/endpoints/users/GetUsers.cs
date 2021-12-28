@@ -11,7 +11,6 @@ namespace MTCG.endpoints.users
         private String pattern = "/users/";
         public bool canProcrss(Request request)
         {
-            Response response = new Response();
             return Regex.IsMatch(request.path, "/users/([0-9a-zA-Z.-]+)")
                 && request.getMethode().Equals(Request.METHODE.GET);
         }

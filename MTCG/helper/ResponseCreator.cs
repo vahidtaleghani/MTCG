@@ -65,5 +65,12 @@ namespace MTCG.helper
             response.Send(Response.StatusCode.Internal_Server_Error, message, response.Content_Type_value[Content_Type.HTML]);
             return response;
         }
+
+        public static Response serverError()
+        {
+            Response response = new Response();
+            response.Send(Response.StatusCode.Internal_Server_Error, response.status_code_value[StatusCode.Internal_Server_Error], response.Content_Type_value[Content_Type.HTML]);
+            return response;
+        }
     }
 }

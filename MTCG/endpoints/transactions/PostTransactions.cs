@@ -12,7 +12,6 @@ namespace MTCG.endpoints.transactions
     {
         public bool canProcrss(Request request)
         {
-            Response response = new Response();
             return request.path.Equals("/transactions/packages")
                 && request.getMethode().Equals(Request.METHODE.POST);
         }

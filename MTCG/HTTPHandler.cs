@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MTCG.helper;
+using System;
 using System.IO;
 using System.Net.Sockets;
 
@@ -23,15 +24,21 @@ namespace MTCG
 
                 Request request = new Request(new StreamReader(client.GetStream()));
 
-                Response response = Program.endpointController.getResponse(request);
-
+                Response response;
+                try
+                {
+                    response = Program.endpointController.getResponse(request);
+                }
+                catch (Exception exc)
+                {
+                    Console.WriteLine("| Error: " + exc.Message);
+                    response = ResponseCreator.serverError();
+                }
                 response.Send(new StreamWriter(client.GetStream()));
 
                 Console.WriteLine("| Connection closed");
 
                 Console.WriteLine("----------------------------------------");
-
-
             }
             catch (Exception exc)
             {

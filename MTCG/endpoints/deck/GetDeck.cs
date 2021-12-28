@@ -14,7 +14,6 @@ namespace MTCG.endpoints.deck
     {
         public bool canProcrss(Request request)
         {
-            Response response = new Response();
             return request.path.Equals("/deck")
                 && request.getMethode().Equals(Request.METHODE.GET);
         }

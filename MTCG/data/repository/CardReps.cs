@@ -25,6 +25,8 @@ namespace MTCG.repository
                     cardlist.Add(new Card(
                         dataReader["id"].ToString(),
                         dataReader["name"].ToString(),
+                        dataReader["element_type"].ToString(),
+                        dataReader["card_type"].ToString(),
                         Convert.ToDouble(dataReader["damage"]),
                         Convert.ToInt32(dataReader["package_id"]),
                         dataReader["username"].ToString(),
@@ -37,11 +39,11 @@ namespace MTCG.repository
             }
             return cardlist;
         }
-        public bool addCard(String id, String name, float damage, int packageId)
+        public bool addCard(String id, String name, String element_type , String card_type ,float damage, int packageId)
         {
-            string query = string.Format("INSERT INTO cards (id, name ,damage, package_id , username , deck) " +
-                "VALUES ('{0}','{1}', '{2}','{3}','{4}','{5}')",
-                id, name, damage, packageId, null, false);
+            string query = string.Format("INSERT INTO cards (id, name ,element_type ,card_type ,damage, package_id , username , deck) " +
+                "VALUES ('{0}','{1}', '{2}','{3}','{4}','{5}','{6}','{7}')",
+                id, name,element_type,card_type , damage, packageId, null, false);
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
@@ -116,6 +118,8 @@ namespace MTCG.repository
                     cardlist.Add(new Card(
                         dataReader["id"].ToString(),
                         dataReader["name"].ToString(),
+                        dataReader["element_type"].ToString(),
+                        dataReader["card_type"].ToString(),
                         Convert.ToDouble(dataReader["damage"]),
                         Convert.ToInt32(dataReader["package_id"]),
                         dataReader["username"].ToString(),
@@ -152,6 +156,64 @@ namespace MTCG.repository
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
                 NpgsqlDataReader dataReader = command.ExecuteReader();
                 if (dataReader.Read() ==false)
+                    return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public List<Card> getAllCardInDeckByUsername(String username)
+        {
+            string query = string.Format("SELECT * from cards where username='{0}' and deck=true", username);
+            List<Card> cardlist = new List<Card>();
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                NpgsqlDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                    cardlist.Add(new Card(
+                        dataReader["id"].ToString(),
+                        dataReader["name"].ToString(),
+                        dataReader["element_type"].ToString(),
+                        dataReader["card_type"].ToString(),
+                        Convert.ToDouble(dataReader["damage"]),
+                        Convert.ToInt32(dataReader["package_id"]),
+                        dataReader["username"].ToString(),
+                        Convert.ToBoolean(dataReader["deck"])
+                        ));
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("error occurred: " + exc.Message);
+            }
+            return cardlist;
+        }
+        public bool updateDeckByUsernameAfterPlay(String id, string username)
+        {
+            string query = string.Format("UPDATE cards SET deck=false WHERE username='{0}' and id='{1}'", username, id);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                int dataReader = command.ExecuteNonQuery();
+                if (dataReader == 0)
+                    return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool updateCardByUsernameAfterPlay(String id, string username)
+        {
+            string query = string.Format("UPDATE cards SET deck=false , username='{0}' where id='{1}'", username, id);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                int dataReader = command.ExecuteNonQuery();
+                if (dataReader == 0)
                     return false;
                 return true;
             }

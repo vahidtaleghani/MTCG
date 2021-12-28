@@ -18,7 +18,6 @@ namespace MTCG.endpoints.session
 
         public bool canProcrss(Request request)
         {
-            Response response = new Response();
             return request.path.Equals("/sessions")
                 && request.getMethode().Equals(Request.METHODE.POST);
         }

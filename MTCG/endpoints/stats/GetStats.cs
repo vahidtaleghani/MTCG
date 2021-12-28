@@ -16,7 +16,6 @@ namespace MTCG.endpoints.stats
 
         public bool canProcrss(Request request)
         {
-            Response response = new Response();
             return request.path.Equals("/stats")
                 && request.getMethode().Equals(Request.METHODE.GET);
         }

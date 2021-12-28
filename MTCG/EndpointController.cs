@@ -1,4 +1,5 @@
 ﻿using MTCG.endpoints;
+using MTCG.endpoints.battle;
 using MTCG.endpoints.cards;
 using MTCG.endpoints.deck;
 using MTCG.endpoints.packages;
@@ -28,6 +29,7 @@ namespace MTCG
             endpointList.Add(new GetDeck());
             endpointList.Add(new PutDeck());
             endpointList.Add(new GetStats());
+            endpointList.Add(new PostBattle());
         }
 
         public Response getResponse(Request request)

@@ -1,4 +1,5 @@
-﻿using MTCG.repository;
+﻿using MTCG.Play;
+using MTCG.repository;
 using System;
 using System.Net;
 using System.Net.Sockets;
@@ -11,6 +12,7 @@ namespace MTCG
      
         private static int PORT = 10001;
         public static EndpointController endpointController = new EndpointController();
+        public static FightController fightController = new FightController();
         static void Main(string[] args)
         {
             TcpListener listener = null;

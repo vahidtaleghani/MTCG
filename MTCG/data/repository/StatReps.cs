@@ -87,5 +87,53 @@ namespace MTCG.repository
             }
             return null;
         }
+        public bool updateStatWinnerByUsernameAfterPlay(String username)
+        {
+            string query = string.Format("UPDATE stats SET elo=elo+3, win = win+1 where username='{0}'", username);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                int dataReader = command.ExecuteNonQuery();
+                if (dataReader == 0)
+                    return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool updateStatLoserByUsernameAfterPlay(String username)
+        {
+            string query = string.Format("UPDATE stats SET elo=elo-5 , lose = lose+1 where username='{0}'", username);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                int dataReader = command.ExecuteNonQuery();
+                if (dataReader == 0)
+                    return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool updateStatDrawByUsernameAfterPlay(String username)
+        {
+            string query = string.Format("UPDATE stats SET draw=draw+1 where username='{0}'", username);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                int dataReader = command.ExecuteNonQuery();
+                if (dataReader == 0)
+                    return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }
