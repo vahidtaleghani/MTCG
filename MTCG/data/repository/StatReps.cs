@@ -169,6 +169,5 @@ namespace MTCG.repository
                 return false;
             }
         }
-        
     }
 }

@@ -59,6 +59,12 @@ namespace MTCG.helper
             response.Send(Response.StatusCode.OK, jsonString, response.Content_Type_value[Content_Type.JSON]);
             return response;
         }
+        public static Response okPlainPayload(String plainString)
+        {
+            Response response = new Response();
+            response.Send(Response.StatusCode.OK, plainString, response.Content_Type_value[Content_Type.PLAIN]);
+            return response;
+        }
         public static Response serverError(String message)
         {
             Response response = new Response();

@@ -30,7 +30,6 @@ namespace MTCG
                 payload = payload; 
             }  
         }
-
         public Response() 
         {
                status_code_value = new Dictionary<StatusCode, string>()
@@ -54,7 +53,6 @@ namespace MTCG
         {
             return this.statusCode != null && (this.payload == null || this.contentType != null);
         }
-
         public void Send(StatusCode statusCode, String payload, String contentType)
         {
             //--
@@ -62,7 +60,6 @@ namespace MTCG
             this.payload = payload;
             this.contentType = contentType;
         }
-
         public void Send(StreamWriter sw)
         {
             if(!isValid())

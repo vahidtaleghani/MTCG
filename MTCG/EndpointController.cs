@@ -29,6 +29,7 @@ namespace MTCG
             endpointList.Add(new GetCards());
             endpointList.Add(new GetDeck());
             endpointList.Add(new PutDeck());
+            endpointList.Add(new GetDeckFormat());
             endpointList.Add(new GetStats());
             endpointList.Add(new GetScore());
             endpointList.Add(new PostBattle());
