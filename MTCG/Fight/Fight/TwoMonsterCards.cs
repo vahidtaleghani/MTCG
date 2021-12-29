@@ -1,10 +1,7 @@
 ﻿using MTCG.endpoints.battle;
 using MTCG.repository.entity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MTCG.Play.play
 {
@@ -51,7 +48,7 @@ namespace MTCG.Play.play
                     default:
                         {
                             if (card1.damage > card2.damage)
-                                new UpdateTable().update_Deck_Card_Stat_Table(card1, card2);
+                                new UpdateTable().update_Deck_Card_Stat_Table(card1, card2); 
                             else if (card1.damage < card2.damage)
                                 new UpdateTable().update_Deck_Card_Stat_Table(card2, card1);
                             else

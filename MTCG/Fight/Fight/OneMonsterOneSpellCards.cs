@@ -30,20 +30,18 @@ namespace MTCG.Play.play
                 }
                 // Kraken Monster card -> Kraken gewinnt
                 if (new MonsterType().getMonsterType(card2.card_type).Equals(MonsterType.Monster_Type.Kraken))
-                {
                     new UpdateTable().update_Deck_Card_Stat_Table(card2, card1);
-                }
                 // Knights Monster card And water Spell Card-> waterSpells Card gewinnt
                 else if(new MonsterType().getMonsterType(card2.card_type).Equals(MonsterType.Monster_Type.Knight) &&
-                    new ElementType().getElementType(card1.element_type).Equals(ElementType.Element_Type.Water))
-                {
-                        new UpdateTable().update_Deck_Card_Stat_Table(card1, card2);
-                }
+                        new ElementType().getElementType(card1.element_type).Equals(ElementType.Element_Type.Water))
+                    new UpdateTable().update_Deck_Card_Stat_Table(card1, card2);
+       
                 //pure Monster card -> abhängig von Damage 
                 else if(String.IsNullOrEmpty(card2.element_type))
                 {
                     if (card1.damage > card2.damage)
                         new UpdateTable().update_Deck_Card_Stat_Table(card1, card2);
+         
                     else if (card1.damage < card2.damage)
                         new UpdateTable().update_Deck_Card_Stat_Table(card2, card1);
                     else

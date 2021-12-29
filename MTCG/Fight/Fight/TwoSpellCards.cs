@@ -49,9 +49,9 @@ namespace MTCG.Play.play
                     default:
                         {
                             if (card1.damage > card2.damage)
-                                new UpdateTable().update_Deck_Card_Stat_Table(card1, card2);
+                                new UpdateTable().update_Deck_Card_Stat_Table(card1, card2);   
                             else if (card1.damage < card2.damage)
-                                new UpdateTable().update_Deck_Card_Stat_Table(card2, card1);
+                                new UpdateTable().update_Deck_Card_Stat_Table(card2, card1); 
                             else
                             {
                                 new UpdateTable().update_Stat_Table(card2, card1);

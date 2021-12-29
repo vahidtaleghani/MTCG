@@ -8,7 +8,6 @@ namespace MTCG.Play
     public class FightController
     {
         List<IFights> battleList = new List<IFights>();
-
         public FightController()
         {
             battleList.Add(new TwoSpellCards());

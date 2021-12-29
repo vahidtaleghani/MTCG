@@ -10,7 +10,7 @@ namespace MTCG.endpoints.battle
         
         public bool canProcrss(Request request)
         {
-            return request.path.Equals("/battle")
+            return request.path.Equals("/battles")
                 && request.getMethode().Equals(Request.METHODE.POST);
         }
 
@@ -24,7 +24,6 @@ namespace MTCG.endpoints.battle
                     return ResponseCreator.forbidden("This user does not exist");
                 
                 // kontrollieren, ob users hat 4 karte
-                
                 if(new CardReps().getAllCardInDeckByUsername(username).Count !=4)
                     return ResponseCreator.forbidden("This user does not have 4 Card in Deck");
 
@@ -34,13 +33,19 @@ namespace MTCG.endpoints.battle
         
                 while (BattleController.getInstance().isInProgress())
                 {
-                    Thread.Sleep(100);
-                    //return ResponseCreator.okJsonPayload(BattleController.getInstance().getLastResult());
+                    try
+                    {
+                        Thread.Sleep(200);
+                    }
+                    catch (Exception exc)
+                    {
+                        Console.WriteLine("| Error: " + exc.Message);
+                    }
                 }
 
                 // Tournament ist fertig und detailliertes Protokoll erhalten und zurückgeben
-
-                return ResponseCreator.forbidden("no user");
+                //return ResponseCreator.okJsonPayload("OK");
+                return ResponseCreator.okJsonPayload(BattleController.getInstance().getLastResult());
 
             }
             catch (Exception)

@@ -1,13 +1,9 @@
-﻿using MTCG.endpoints.battle.play;
-using MTCG.helper;
-using MTCG.Play;
-using MTCG.repository;
+﻿using MTCG.repository;
 using MTCG.repository.entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using static MTCG.endpoints.battle.MonsterType;
+
 
 namespace MTCG.endpoints.battle
 {
@@ -18,7 +14,13 @@ namespace MTCG.endpoints.battle
         private List<String> playerList = new List<String>();
         DateTime startTime;
         static Random random = new Random();
+        private String lastResult = null;
+        private String player1;
+        private String player2;
         public int i = 0;
+        private int eloPlayer1BeforePlay;
+        private int eloPlayer2BeforePlay;
+
 
         private BattleController(){ }
         public static BattleController getInstance()
@@ -44,20 +46,21 @@ namespace MTCG.endpoints.battle
         }
         public bool isInProgress()
         {
-            if (startTime.AddSeconds(15) > DateTime.Now && startTime != DateTime.MinValue)
+            if ((startTime.AddSeconds(15) > DateTime.Now) && startTime != DateTime.MinValue )
             {
                 if (playerList.Count == 2)
                 {
-                    String player1 = playerList.ElementAt(0);
-                    String player2 = playerList.ElementAt(1);
+                    this.player1 = playerList.ElementAt(0);
+                    this.player2 = playerList.ElementAt(1);
+                    eloPlayer1Before = new StatReps().getStatsByUsername(this.player1).elo;
+                    eloPlayer2Before = new StatReps().getStatsByUsername(this.player2).elo;
 
                     Console.WriteLine("| " + player1 + "        |        " + player2);
-
                     //Battle
-                    List<Card> allCardPlayer1 = new CardReps().getAllCardInDeckByUsername(player1);
-                    List<Card> allCardPlayer2 = new CardReps().getAllCardInDeckByUsername(player2);
+                    List<Card> allCardPlayer1 = new CardReps().getAllCardInDeckByUsername(this.player1);
+                    List<Card> allCardPlayer2 = new CardReps().getAllCardInDeckByUsername(this.player2);
 
-                    while (allCardPlayer1.Count !=0 && allCardPlayer2.Count !=0)
+                    while (allCardPlayer1.Count !=0 && allCardPlayer2.Count !=0 && i<100)
                     {
                         int randomCardPlayer1 = getRandomCardNumber(allCardPlayer1);
                         int randomCardPlayer2 = getRandomCardNumber(allCardPlayer2);
@@ -75,11 +78,13 @@ namespace MTCG.endpoints.battle
                         {
                             Console.WriteLine("| Error: " + exc.Message);
                         }
-                        if (result)
+                        if (!result)
+                            i++;
+                        else
                         {
                             deleteCardFromList(randomCardPlayer1, allCardPlayer1);
-                            deleteCardFromList(randomCardPlayer2, allCardPlayer2);
-                        }    
+                            deleteCardFromList(randomCardPlayer2, allCardPlayer2); 
+                        }
                     }
                     startTime = DateTime.MinValue;
                     return false;
@@ -90,7 +95,6 @@ namespace MTCG.endpoints.battle
             playerList.Clear();
             return false;
         }
-         
 
         public int getRandomCardNumber(List<Card> cardList)
         {
@@ -100,10 +104,16 @@ namespace MTCG.endpoints.battle
         {
             cardList.RemoveAt(index);
         }
-        
-        private String lastResult = "OK";
         public String getLastResult()
         {
+            int eloPlayer1AfterPlay = new StatReps().getStatsByUsername(this.player1).elo;
+            int eloPlayer2AfterPlay = new StatReps().getStatsByUsername(this.player2).elo;
+            if (eloPlayer1AfterPlay - this.eloPlayer1BeforePlay > eloPlayer2AfterPlay - this.eloPlayer2BeforePlay)
+                this.lastResult = this.player1 + " Is Winner";
+            else if(eloPlayer1AfterPlay - this.eloPlayer1BeforePlay < eloPlayer2AfterPlay - this.eloPlayer2BeforePlay)
+                this.lastResult = this.player2 + " Is Winner";
+            else
+                this.lastResult = "DRAW";
             return this.lastResult;
         }
     }
