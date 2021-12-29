@@ -6,6 +6,7 @@ using MTCG.endpoints.packages;
 using MTCG.endpoints.Score;
 using MTCG.endpoints.session;
 using MTCG.endpoints.stats;
+using MTCG.endpoints.trade;
 using MTCG.endpoints.transactions;
 using MTCG.endpoints.users;
 using MTCG.helper;
@@ -33,6 +34,9 @@ namespace MTCG
             endpointList.Add(new GetStats());
             endpointList.Add(new GetScore());
             endpointList.Add(new PostBattle());
+            endpointList.Add(new GetTrade());
+            endpointList.Add(new PostTrade());
+
         }
 
         public Response getResponse(Request request)

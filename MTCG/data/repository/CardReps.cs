@@ -164,6 +164,22 @@ namespace MTCG.repository
                 return false;
             }
         }
+        public bool ControlCardBelongeToUsername(String id, string username)
+        {
+            string query = string.Format("SELECT * from cards WHERE username='{0}' and id='{1}'", username, id);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                NpgsqlDataReader dataReader = command.ExecuteReader();
+                if (dataReader.Read() == false)
+                    return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         public List<Card> getAllCardInDeckByUsername(String username)
         {
             string query = string.Format("SELECT * from cards where username='{0}' and deck=true", username);
