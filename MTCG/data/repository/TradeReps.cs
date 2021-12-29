@@ -60,5 +60,46 @@ namespace MTCG.data.repository
                 return false;
             }
         }
+        public Trade getTradeById(String id)
+        {
+            string query = string.Format("select * from store where id='{0}' and was_stored = false", id);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                NpgsqlDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    return new Trade(
+                        dataReader["username"].ToString(),
+                        dataReader["id"].ToString(),
+                        dataReader["card_trade_id"].ToString(),
+                        dataReader["card_type"].ToString(),
+                        Convert.ToDouble(dataReader["min_damage"]),
+                        Convert.ToBoolean(dataReader["was_stored"])
+                        );
+                }
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("error occurred: " + exc.Message);
+            }
+            return null;
+        }
+        public bool updateStoredById(String id)
+        {
+            string query = string.Format("UPDATE store SET was_stored=true WHERE id='{0}'", id);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                int dataReader = command.ExecuteNonQuery();
+                if (dataReader == 0)
+                    return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

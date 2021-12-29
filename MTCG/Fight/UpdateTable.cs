@@ -28,7 +28,7 @@ namespace MTCG.Play
             try
             {
                 new CardReps().updateDeckByUsernameAfterPlay(card1.id, card1.username);
-                new CardReps().updateCardByUsernameAfterPlay(card2.id, card1.username);
+                new CardReps().updateCardByUsername(card2.id, card1.username);
                 new StatReps().updateStatWinnerByUsernameAfterPlay(card1.username);
                 new StatReps().updateStatLoserByUsernameAfterPlay(card2.username);
             }

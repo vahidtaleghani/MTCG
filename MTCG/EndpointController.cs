@@ -36,6 +36,7 @@ namespace MTCG
             endpointList.Add(new PostBattle());
             endpointList.Add(new GetTrade());
             endpointList.Add(new PostTrade());
+            endpointList.Add(new PostTradeIdCard());
 
         }
 

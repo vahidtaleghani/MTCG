@@ -13,6 +13,31 @@ namespace MTCG.repository
         {
             this.NpgsqlConn = new NpgsqlConn().getnpgsqlConn();
         }
+        public Card getCardById(String id)
+        {
+            string query = string.Format("SELECT * from cards where id='{0}'", id);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                NpgsqlDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                    return new Card(
+                        dataReader["id"].ToString(),
+                        dataReader["name"].ToString(),
+                        dataReader["element_type"].ToString(),
+                        dataReader["card_type"].ToString(),
+                        Convert.ToDouble(dataReader["damage"]),
+                        Convert.ToInt32(dataReader["package_id"]),
+                        dataReader["username"].ToString(),
+                        Convert.ToBoolean(dataReader["deck"])
+                        );
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("error occurred: " + exc.Message);
+            }
+            return null;
+        }
         public List<Card> getAllCardsByUsername(String username)
         {
             string query = string.Format("SELECT * from cards where username='{0}'", username);
@@ -222,7 +247,7 @@ namespace MTCG.repository
                 return false;
             }
         }
-        public bool updateCardByUsernameAfterPlay(String id, string username)
+        public bool updateCardByUsername(String id, string username)
         {
             string query = string.Format("UPDATE cards SET deck=false , username='{0}' where id='{1}'", username, id);
             try
