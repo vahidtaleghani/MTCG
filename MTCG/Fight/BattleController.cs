@@ -18,8 +18,8 @@ namespace MTCG.endpoints.battle
         private String player1;
         private String player2;
         public int i = 0;
-        private int eloPlayer1BeforePlay;
-        private int eloPlayer2BeforePlay;
+        private int eloPlayer1BeforeFight;
+        private int eloPlayer2BeforeFight;
 
 
         private BattleController(){ }
@@ -52,8 +52,8 @@ namespace MTCG.endpoints.battle
                 {
                     this.player1 = playerList.ElementAt(0);
                     this.player2 = playerList.ElementAt(1);
-                    eloPlayer1Before = new StatReps().getStatsByUsername(this.player1).elo;
-                    eloPlayer2Before = new StatReps().getStatsByUsername(this.player2).elo;
+                    eloPlayer1BeforeFight = new StatReps().getStatsByUsername(this.player1).elo;
+                    eloPlayer2BeforeFight = new StatReps().getStatsByUsername(this.player2).elo;
 
                     Console.WriteLine("| " + player1 + "        |        " + player2);
                     //Battle
@@ -106,11 +106,11 @@ namespace MTCG.endpoints.battle
         }
         public String getLastResult()
         {
-            int eloPlayer1AfterPlay = new StatReps().getStatsByUsername(this.player1).elo;
-            int eloPlayer2AfterPlay = new StatReps().getStatsByUsername(this.player2).elo;
-            if (eloPlayer1AfterPlay - this.eloPlayer1BeforePlay > eloPlayer2AfterPlay - this.eloPlayer2BeforePlay)
+            int eloPlayer1AfterFight = new StatReps().getStatsByUsername(this.player1).elo;
+            int eloPlayer2AfterFight = new StatReps().getStatsByUsername(this.player2).elo;
+            if (eloPlayer1AfterFight - this.eloPlayer1BeforeFight > eloPlayer2AfterFight - this.eloPlayer2BeforeFight)
                 this.lastResult = this.player1 + " Is Winner";
-            else if(eloPlayer1AfterPlay - this.eloPlayer1BeforePlay < eloPlayer2AfterPlay - this.eloPlayer2BeforePlay)
+            else if(eloPlayer1AfterFight - this.eloPlayer1BeforeFight < eloPlayer2AfterFight - this.eloPlayer2BeforeFight)
                 this.lastResult = this.player2 + " Is Winner";
             else
                 this.lastResult = "DRAW";

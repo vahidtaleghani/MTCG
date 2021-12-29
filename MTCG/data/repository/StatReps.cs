@@ -87,6 +87,40 @@ namespace MTCG.repository
             }
             return null;
         }
+        public List<StatsUser> getStatsAllUsers()
+        {
+            string query = string.Format("SELECT users.username, users.name, users.bio, users.image, users.coin , " +
+                "stats.elo, stats.win, stats.lose, stats.draw, sum(stats.win + stats.lose + stats.draw) as sumPlay " +
+                "FROM stats INNER JOIN users ON stats.username = users.username " +
+                "where users.username !='admin' " +
+                "group by users.username, users.name, users.bio, users.image, users.coin, stats.elo, stats.win, stats.lose, stats.draw " +
+                "order by stats.elo DESC");
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                NpgsqlDataReader dataReader = command.ExecuteReader();
+                List<StatsUser> allUsersStats = new List<StatsUser>();
+                while (dataReader.Read())
+                    allUsersStats.Add(new StatsUser(
+                        dataReader["username"].ToString(),
+                        dataReader["name"].ToString(),
+                        dataReader["bio"].ToString(),
+                        dataReader["image"].ToString(),
+                        Convert.ToInt32(dataReader["coin"]),
+                        Convert.ToInt32(dataReader["elo"]),
+                        Convert.ToInt32(dataReader["win"]),
+                        Convert.ToInt32(dataReader["lose"]),
+                        Convert.ToInt32(dataReader["draw"]),
+                        Convert.ToInt32(dataReader["sumPlay"])
+                        ));
+                return allUsersStats;
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("error occurred: " + exc.Message);
+            }
+            return null;
+        }
         public bool updateStatWinnerByUsernameAfterPlay(String username)
         {
             string query = string.Format("UPDATE stats SET elo=elo+3, win = win+1 where username='{0}'", username);
@@ -135,5 +169,6 @@ namespace MTCG.repository
                 return false;
             }
         }
+        
     }
 }
