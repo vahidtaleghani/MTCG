@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace MTCG.endpoints.trade
 {
-    public class PostTradeIdCard : IEndpoint
+    public class PostTakeCard : IEndpoint
     {
         private String pattern = "/tradings/";
         public bool canProcrss(Request request)

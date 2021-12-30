@@ -101,5 +101,21 @@ namespace MTCG.data.repository
                 return false;
             }
         }
+        public bool deleteCardInStoredById(String id)
+        {
+            string query = string.Format("Delete from store WHERE id='{0}'", id);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                int dataReader = command.ExecuteNonQuery();
+                if (dataReader == 0)
+                    return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }
