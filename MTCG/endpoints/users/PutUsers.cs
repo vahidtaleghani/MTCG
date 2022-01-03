@@ -36,7 +36,7 @@ namespace MTCG.endpoints.users
 
                 String[] substrings = Regex.Split(request.path, this.pattern);
                 if (substrings[0] == null || !user.Equals(substrings[1]))
-                    return ResponseCreator.notFound("This token does not belong to the user");
+                    return ResponseCreator.forbidden("You are not authorized to edit this profile");
 
                 // Kontrolieren Json
                 try

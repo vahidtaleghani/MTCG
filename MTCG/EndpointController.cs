@@ -25,6 +25,7 @@ namespace MTCG
             endpointList.Add(new PostSession());
             endpointList.Add(new GetUsers());
             endpointList.Add(new PutUsers());
+            endpointList.Add(new DeleteUsers());
             endpointList.Add(new PostPackages());
             endpointList.Add(new PostTransactions());
             endpointList.Add(new GetCards());
@@ -58,19 +59,9 @@ namespace MTCG
             }
             // wenn nicht gefünden 
             // wenn unsere funktion ist static denn brauchen wir nicht new schreiben
-            return ResponseCreator.notFound();
-             
+            return ResponseCreator.notFound();   
         }
     }
 }
 
-
-/*
-            switch (request.path)
-            {
-                case "/users":
-                    return 
-            }*/
-//Endpunkt ep =  endpunktList.FindIndex();
-//return endpunktList.ElementAt(0).handleRequest(request);
 

@@ -27,7 +27,7 @@ namespace MTCG.endpoints.users
 
                 String[] substrings = Regex.Split(request.path, this.pattern);
                 if (substrings[0] == null || !user.Equals(substrings[1]))
-                    return ResponseCreator.notFound();
+                    return ResponseCreator.forbidden("You are not authorized to view this profile");
 
                 User userInfo = new UserReps().getUser(user);
                 String jsonString = JsonConvert.SerializeObject(userInfo);

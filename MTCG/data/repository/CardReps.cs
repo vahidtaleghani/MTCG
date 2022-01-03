@@ -263,5 +263,22 @@ namespace MTCG.repository
                 return false;
             }
         }
+        public bool deleteCards(String username)
+        {
+            string query = string.Format("DELETE from cards where username='{0}'", username);
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                int dataReader = command.ExecuteNonQuery();
+
+                if (dataReader != 0)
+                    return true;
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("error occurred: " + exc.Message);
+            }
+            return false;
+        }
     }
 }

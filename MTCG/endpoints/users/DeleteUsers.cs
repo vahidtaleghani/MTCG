@@ -28,9 +28,9 @@ namespace MTCG.endpoints.users
 
                 String[] substrings = Regex.Split(request.path, this.pattern);
                 if (substrings[0] == null || !user.Equals(substrings[1]))
-                    return ResponseCreator.notFound();
+                    return ResponseCreator.forbidden("You are not authorized to delete user");
 
-                if (!new UserReps().deleteUser(user))
+                if (!new CardReps().deleteCards(user) || !new UserReps().deleteUser(user))
                     return ResponseCreator.serverError();
                 return ResponseCreator.ok();
             }
