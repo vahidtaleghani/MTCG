@@ -13,23 +13,10 @@ namespace MTCG
         public Dictionary<StatusCode, string> status_code_value { get; set; }
         public Dictionary<Content_Type, string> Content_Type_value { get; set; }
 
-        private StatusCode statusCode;
-        private String payload;
+        public StatusCode statusCode { get; private set; }
+        public String payload { get; private set; }
         private String contentType;
-        public StatusCode statuscode
-        {
-            set
-            {
-                statusCode = statusCode;
-            }
-        }
-        public String Payload 
-        {
-            set 
-            { 
-                payload = payload; 
-            }  
-        }
+
         public Response() 
         {
                status_code_value = new Dictionary<StatusCode, string>()

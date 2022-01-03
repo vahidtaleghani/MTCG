@@ -1,4 +1,6 @@
 ﻿using MTCG.helper;
+using MTCG.repository;
+using Newtonsoft.Json;
 using System;
 using System.Text.RegularExpressions;
 
@@ -26,12 +28,15 @@ namespace MTCG.endpoints.users
                 String[] substrings = Regex.Split(request.path, this.pattern);
                 if (substrings[0] == null || !user.Equals(substrings[1]))
                     return ResponseCreator.notFound();
+
+                User userInfo = new UserReps().getUser(user);
+                String jsonString = JsonConvert.SerializeObject(userInfo);
+                return ResponseCreator.okJsonPayload(jsonString);
             }
             catch (Exception)
             {
                 return ResponseCreator.forbidden();
             }
-            return ResponseCreator.ok();
         }
     }
 }

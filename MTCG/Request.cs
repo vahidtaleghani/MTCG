@@ -80,8 +80,7 @@ namespace MTCG
                         throw new Exception("Payload was not the expected lenght " + hasRead);
                     this.payload = new String(buf);
                     //Console.WriteLine("payload:" + this.payload);
-                }
-                
+                }  
             }
             catch (Exception exc)
             {
@@ -94,8 +93,7 @@ namespace MTCG
         {
             if (method != null && this.path != null && this.httpVersion != null)
                 return true;
-            else
-                return false;
+            return false;
         }
     }
 }

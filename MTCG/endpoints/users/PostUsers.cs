@@ -30,7 +30,7 @@ namespace MTCG.endpoints.users
                 if(String.IsNullOrEmpty(this.reqUsers.Username) || String.IsNullOrEmpty(this.reqUsers.Password))
                     return ResponseCreator.jsonInvalid();
                 if(!new UserReps().addUser(this.reqUsers.Username, this.reqUsers.Password))
-                    return ResponseCreator.jsonInvalid("username is existiert");
+                    return ResponseCreator.jsonInvalid("username exists");
                 Console.WriteLine("  User with name : " + this.reqUsers.Username + " and password: " + this.reqUsers.Password + " added");
             }
             catch (Exception)

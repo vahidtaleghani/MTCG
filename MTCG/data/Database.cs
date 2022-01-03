@@ -23,18 +23,14 @@ namespace MTCG.repository
         {
             connect();
         }
-
         private static Database _instance;
         // static -> wir gereifen ohne objekt 
         public static Database GetInstance()
         {
             if(_instance == null)
-            {
                 _instance = new Database();
-            }
             return _instance;
         }
-
         private void connect()
         {
            
@@ -43,16 +39,7 @@ namespace MTCG.repository
             {
                 NpgsqlConn = new NpgsqlConnection(strConn);
                 Console.WriteLine("Connected to Database");
-               
-                ////-----------------
-                //List<User> userlist = new UserReps().getAllUsers();
-                //foreach (User users in userlist)
-                //{
-                //    Console.WriteLine((users == null) ? "Not Found" : users.toStringUser());
-                //}
-                ////--------------
-                //bool result = new UserReps().deleteUser("gngcng");
-                //Console.WriteLine(result);   
+                
             }
             catch (Exception exc)
             {

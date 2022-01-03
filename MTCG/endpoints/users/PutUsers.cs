@@ -45,7 +45,7 @@ namespace MTCG.endpoints.users
                     if (String.IsNullOrEmpty(this.reqUsers.Name) || String.IsNullOrEmpty(this.reqUsers.Bio) || String.IsNullOrEmpty(this.reqUsers.Image))
                         return ResponseCreator.jsonInvalid();
                     if (!new UserReps().updateUser(user,this.reqUsers.Name, this.reqUsers.Bio,this.reqUsers.Image))
-                        return ResponseCreator.jsonInvalid("User could not be updated");
+                        return ResponseCreator.serverError("User could not be updated");
                     Console.WriteLine("  User with name : " + this.reqUsers.Name + " , Bio: " + this.reqUsers.Bio + " and Image: " + this.reqUsers.Image +" updated");
                 }
                 catch (Exception)
