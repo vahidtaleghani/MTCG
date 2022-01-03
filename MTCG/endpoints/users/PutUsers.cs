@@ -32,11 +32,11 @@ namespace MTCG.endpoints.users
                 //kontrolieren Headers
                 String user = new Authorize().authorizeUser(request);
                 if (user == null)
-                    return ResponseCreator.forbidden();
+                    return ResponseCreator.unauthorized("No valid authorization token provided");
 
                 String[] substrings = Regex.Split(request.path, this.pattern);
                 if (substrings[0] == null || !user.Equals(substrings[1]))
-                    return ResponseCreator.forbidden("This token does not belong to the user");
+                    return ResponseCreator.notFound("This token does not belong to the user");
 
                 // Kontrolieren Json
                 try

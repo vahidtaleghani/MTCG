@@ -31,7 +31,7 @@ namespace MTCG.endpoints.stats
                 //kontrolieren Headers
                 String user = new Authorize().authorizeUser(request);
                 if (user == null)
-                    return ResponseCreator.forbidden();
+                    return ResponseCreator.unauthorized("No valid authorization token provided");
 
                 // Kontrolieren Json
                 try

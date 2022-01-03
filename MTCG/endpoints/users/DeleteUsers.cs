@@ -1,6 +1,5 @@
-﻿using MTCG.data.entity;
-using MTCG.data.repository;
-using MTCG.helper;
+﻿using MTCG.helper;
+using MTCG.repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +7,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace MTCG.endpoints.trade
+namespace MTCG.endpoints.users
 {
-    public class DeleteTrade : IEndpoint
+    public class DeleteUsers : IEndpoint
     {
-        private String pattern = "/tradings/";
+        private String pattern = "/users/";
         public bool canProcrss(Request request)
         {
-            return Regex.IsMatch(request.path, "/tradings/([0-9a-zA-Z.-]+)")
+            return Regex.IsMatch(request.path, "/users/([0-9a-zA-Z.-]+)")
                 && request.getMethode().Equals(Request.METHODE.DELETE);
         }
 
@@ -23,19 +22,15 @@ namespace MTCG.endpoints.trade
         {
             try
             {
-                //kontrolieren Headers
                 String user = new Authorize().authorizeUser(request);
                 if (user == null)
                     return ResponseCreator.unauthorized("No valid authorization token provided");
-                //split to take id
+
                 String[] substrings = Regex.Split(request.path, this.pattern);
-                string id = substrings[1];
-                Trade trade = new TradeReps().getTradeById(id);
-                if (trade == null)
-                    return ResponseCreator.forbidden("This Id does not exist for trade");
-                if (!user.Equals(trade.username))
-                    return ResponseCreator.forbidden("This Id doese not belongs to this user");
-                if (!new TradeReps().deleteCardInStoredById(id))
+                if (substrings[0] == null || !user.Equals(substrings[1]))
+                    return ResponseCreator.notFound();
+
+                if (!new UserReps().deleteUser(user))
                     return ResponseCreator.serverError();
                 return ResponseCreator.ok();
             }

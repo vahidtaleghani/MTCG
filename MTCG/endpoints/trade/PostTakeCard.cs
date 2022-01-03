@@ -29,7 +29,7 @@ namespace MTCG.endpoints.trade
                 //kontrolieren Headers
                 String user = new Authorize().authorizeUser(request);
                 if (user == null)
-                    return ResponseCreator.forbidden();
+                    return ResponseCreator.unauthorized("No valid authorization token provided");
                 //split to take id
                 String[] substrings = Regex.Split(request.path, this.pattern);
 

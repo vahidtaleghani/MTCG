@@ -23,8 +23,7 @@ namespace MTCG.endpoints.cards
             {
                 String username = new Authorize().authorizeUser(request);
                 if (username == null)
-                    return ResponseCreator.forbidden("There is no token");
-
+                    return ResponseCreator.unauthorized("No valid authorization token provided");
                 // Kontrolieren Json
                 try
                 {

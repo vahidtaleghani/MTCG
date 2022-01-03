@@ -21,10 +21,10 @@ namespace MTCG.endpoints.battle
                 // kontrollieren Headers
                 String username = new Authorize().authorizeUser(request);
                 if (username == null)
-                    return ResponseCreator.forbidden("This user does not exist");
-                
+                    return ResponseCreator.unauthorized("No valid authorization token provided");
+
                 // kontrollieren, ob users hat 4 karte
-                if(new CardReps().getAllCardInDeckByUsername(username).Count !=4)
+                if (new CardReps().getAllCardInDeckByUsername(username).Count !=4)
                     return ResponseCreator.forbidden("This user does not have 4 Card in Deck");
 
                 // Kontrolliert, dass der user nur einmal angefordert hat

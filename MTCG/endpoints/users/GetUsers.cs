@@ -23,7 +23,7 @@ namespace MTCG.endpoints.users
             {
                 String user = new Authorize().authorizeUser(request);
                 if (user == null)
-                    return ResponseCreator.forbidden();
+                    return ResponseCreator.unauthorized("No valid authorization token provided");
 
                 String[] substrings = Regex.Split(request.path, this.pattern);
                 if (substrings[0] == null || !user.Equals(substrings[1]))

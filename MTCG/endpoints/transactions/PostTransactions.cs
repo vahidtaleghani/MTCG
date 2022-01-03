@@ -22,7 +22,7 @@ namespace MTCG.endpoints.transactions
             {
                 String username = new Authorize().authorizeUser(request);
                 if (username == null)
-                    return ResponseCreator.forbidden();
+                    return ResponseCreator.unauthorized("No valid authorization token provided");
 
                 int coin = new UserReps().getCoinsByUsername(username);
 

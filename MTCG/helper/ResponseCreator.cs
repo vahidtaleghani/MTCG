@@ -11,6 +11,12 @@ namespace MTCG.helper
             response.Send(Response.StatusCode.Not_Found, response.status_code_value[StatusCode.Not_Found], response.Content_Type_value[Content_Type.HTML]);
             return response;
         }
+        public static Response notFound(String msg)
+        {
+            Response response = new Response();
+            response.Send(Response.StatusCode.Not_Found, msg, response.Content_Type_value[Content_Type.HTML]);
+            return response;
+        }
         public static Response ok()
         {
             Response response = new Response();
@@ -76,6 +82,12 @@ namespace MTCG.helper
         {
             Response response = new Response();
             response.Send(Response.StatusCode.Internal_Server_Error, response.status_code_value[StatusCode.Internal_Server_Error], response.Content_Type_value[Content_Type.HTML]);
+            return response;
+        }
+        public static Response unauthorized(String msg)
+        {
+            Response response = new Response();
+            response.Send(Response.StatusCode.Unauthorized, msg, response.Content_Type_value[Content_Type.HTML]);
             return response;
         }
     }

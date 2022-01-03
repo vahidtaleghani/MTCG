@@ -24,7 +24,7 @@ namespace MTCG.endpoints.deck
             {
                 String username = new Authorize().authorizeUser(request);
                 if (username == null)
-                    return ResponseCreator.forbidden("There is no token");
+                    return ResponseCreator.unauthorized("No valid authorization token provided");
 
                 List<Card> cardList = new CardReps().getDeckByUsername(username);
                 if(cardList.Count == 0)

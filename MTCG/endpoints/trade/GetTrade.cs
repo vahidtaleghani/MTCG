@@ -25,7 +25,7 @@ namespace MTCG.endpoints.trade
             {
                 String username = new Authorize().authorizeUser(request);
                 if (username == null)
-                    return ResponseCreator.forbidden("There is no token");
+                    return ResponseCreator.unauthorized("No valid authorization token provided");
                 try
                 {
                     List<Trade> trade = new TradeReps().getAllCardInStore();
@@ -39,7 +39,6 @@ namespace MTCG.endpoints.trade
                 {
                     return ResponseCreator.forbidden();
                 }
-
             }
             catch (Exception exc)
             {
