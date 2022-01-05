@@ -10,47 +10,62 @@ namespace MTCG.Test
 {
     public class TestUsersReps
     {
+
         [SetUp]
         public void Setup() 
         {
-            Database.GetInstance();
-            UserReps userReps = new UserReps();
-            userReps.addUser("test1", "1234");
-            userReps.addUser("test2", "1234");
-            //User user1 = new User("test1", "test1", "1234", "test1-mtcgToken", null, null,20);
-            //User user2 = new User("test2", "test2", "1234", "test2-mtcgToken", null, null, 20);
+            Database.GetInstance().truncateUsersTable();
+            new UserReps().addUser("user1", "1234");
+            new UserReps().addUser("user2", "1234");
+        }
+
+        [Test]
+        public void TestGetUser()
+        {
+            Assert.AreNotEqual(new UserReps().getUser("user1"), null);
+            Assert.Null(new UserReps().getUser("unknownUser"));
+        }
+
+        [Test]
+        public void TestAddUser() 
+        {
+            Assert.IsTrue(new UserReps().addUser("user3","1234"));
+            Assert.IsFalse(new UserReps().addUser("user2", "1234"));
         }
         
         [Test]
-        public void TestAddUserReturnTrue() 
+        public void TestGetToken()
         {
-            Assert.IsTrue(new UserReps().addUser("test3","1234"),"users added");
-        }
-        
-        [Test]
-        public void TestAddUserReturnfalse()
-        {
-            UserReps userReps = new UserReps();
-            userReps.addUser("test2", "1234");
-            Assert.IsFalse(userReps.addUser("test2", "1234"),"Fehler");
+            Assert.AreEqual(new UserReps().getToken("user1", "1234"), "user1-mtcgToken");
+            Assert.AreNotEqual(new UserReps().getToken("user2", "1234"), "user1-mtcgToken");
+            Assert.AreNotEqual(new UserReps().getToken("user2", "123"), "user2-mtcgToken");
+            Assert.AreNotEqual(new UserReps().getToken("user", "1234"), "user2-mtcgToken");
         }
 
         [Test]
-        public void TestTakeTokenReturnToken()
+        public void TestPassword()
         {
-            Assert.AreEqual(new UserReps().getToken("test1", "1234"), "test1-mtcgToken");
-            Assert.AreNotEqual(new UserReps().getToken("test2", "1234"), "test1-mtcgToken");
-            Assert.AreNotEqual(new UserReps().getToken("test2", "123"), "test1-mtcgToken");
-            Assert.AreNotEqual(new UserReps().getToken("test", "1234"), "test1-mtcgToken");
+            User user = new UserReps().getUser("user1");
+            Assert.AreEqual(user.password, "1234");
+            Assert.AreNotEqual(user.password, "123");
+        }
+        [Test]
+        public void TestEditUser()
+        {
+            User user = new UserReps().getUser("user1");
+            Assert.IsEmpty(user.image);
+
+            Assert.True(new UserReps().updateUser(user.username,"user1","Test bio","Test image"));
+
+            user = new UserReps().getUser("user1");
+            Assert.AreEqual("Test image", user.image);
         }
 
         [Test]
-        public void TestdeleteUserReturnTrue()
+        public void TestshouldDeleteUser()
         {
-            Assert.IsTrue(new UserReps().deleteUser("test3"), "Deleted");
-            Assert.IsFalse(new UserReps().deleteUser("test3"), "Fehler");
+            Assert.IsTrue(new UserReps().deleteUser("user2"), "Deleted");
+            Assert.IsFalse(new UserReps().deleteUser("user3"), "Fehler");
         }
-
-     
     }
 }

@@ -205,32 +205,6 @@ namespace MTCG.repository
                 return false;
             }
         }
-        public List<Card> getAllCardInDeckByUsername(String username)
-        {
-            string query = string.Format("SELECT * from cards where username='{0}' and deck=true", username);
-            List<Card> cardlist = new List<Card>();
-            try
-            {
-                NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
-                NpgsqlDataReader dataReader = command.ExecuteReader();
-                while (dataReader.Read())
-                    cardlist.Add(new Card(
-                        dataReader["id"].ToString(),
-                        dataReader["name"].ToString(),
-                        dataReader["element_type"].ToString(),
-                        dataReader["card_type"].ToString(),
-                        Convert.ToDouble(dataReader["damage"]),
-                        Convert.ToInt32(dataReader["package_id"]),
-                        dataReader["username"].ToString(),
-                        Convert.ToBoolean(dataReader["deck"])
-                        ));
-            }
-            catch (Exception exc)
-            {
-                Console.WriteLine("error occurred: " + exc.Message);
-            }
-            return cardlist;
-        }
         public bool updateDeckByUsernameAfterPlay(String id, string username)
         {
             string query = string.Format("UPDATE cards SET deck=false WHERE username='{0}' and id='{1}'", username, id);
@@ -263,7 +237,7 @@ namespace MTCG.repository
                 return false;
             }
         }
-        public bool deleteCards(String username)
+        public bool deleteCardsByUsername(String username)
         {
             string query = string.Format("DELETE from cards where username='{0}'", username);
             try

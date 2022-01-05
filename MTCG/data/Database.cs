@@ -48,5 +48,32 @@ namespace MTCG.repository
             
         }
 
+        //Löscht alle Daten. Die Datenbank ist nach dem Aufrufen dieser Methode leer
+        public void truncateUsersTable()
+        {
+            String query = "truncate table users cascade";
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, NpgsqlConn);
+                NpgsqlDataReader dataReader = command.ExecuteReader();
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("error occurred: " + exc.Message);
+            }
+        }
+        public void truncateCardsTable()
+        {
+            String query = "truncate table cards cascade";
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, NpgsqlConn);
+                NpgsqlDataReader dataReader = command.ExecuteReader();
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("error occurred: " + exc.Message);
+            }
+        }
     }
 }

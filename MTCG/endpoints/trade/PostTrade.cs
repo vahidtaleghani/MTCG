@@ -41,7 +41,7 @@ namespace MTCG.endpoints.stats
                         return ResponseCreator.jsonInvalid();
                     if (!new CardReps().ControlCardBelongeToUsername(this.reqTrade.CardToTrade, user))
                         return ResponseCreator.forbidden("This Card does not belong to this user");
-                    List<Card> cardslist = new CardReps().getAllCardInDeckByUsername(user);
+                    List<Card> cardslist = new CardReps().getDeckByUsername(user);
 
                     foreach (var card in cardslist)
                     {

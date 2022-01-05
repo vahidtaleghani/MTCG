@@ -57,8 +57,8 @@ namespace MTCG.endpoints.battle
 
                     Console.WriteLine("| " + player1 + "        |        " + player2);
                     //Battle
-                    List<Card> allCardPlayer1 = new CardReps().getAllCardInDeckByUsername(this.player1);
-                    List<Card> allCardPlayer2 = new CardReps().getAllCardInDeckByUsername(this.player2);
+                    List<Card> allCardPlayer1 = new CardReps().getDeckByUsername(this.player1);
+                    List<Card> allCardPlayer2 = new CardReps().getDeckByUsername(this.player2);
 
                     while (allCardPlayer1.Count !=0 && allCardPlayer2.Count !=0 && i<100)
                     {
