@@ -14,26 +14,23 @@ namespace MTCG.Test
         [SetUp]
         public void Setup()
         {
-            Database.GetInstance().truncateCardsTable();
-            new CardReps().addCard("1","WaterSpell","Water","Spell",20,1);
-            new CardReps().addCard("2", "WaterGoblin", "Water", "Goblin", 25, 2);
+            TestHelper.insertCards();
         }
 
         [Test]
         public void TestGetCardById()
         {
             Assert.AreNotEqual(new CardReps().getCardById("1"), null);
-            Assert.Null(new CardReps().getCardById("4"));
+            Assert.Null(new CardReps().getCardById("9"));
         }
 
         [Test]
         public void TestAddCard()
         {
             int package_id = new CardReps().getLastpackageId();
-            Assert.IsTrue(new CardReps().addCard("3", "FireSpell", "Fire", "Spell", 20, package_id+1), null);
-            Assert.IsFalse(new CardReps().addCard("3", "FireSpell", "Fire", "Spell", 20, package_id+1), null);
+            Assert.IsTrue(new CardReps().addCard("9", "FireSpell", "Fire", "Spell", 20, package_id+1), null);
+            Assert.IsFalse(new CardReps().addCard("9", "FireSpell", "Fire", "Spell", 20, package_id+1), null);
         }
-
 
         [Test]
         public void TestConfigeDeck()
@@ -68,11 +65,11 @@ namespace MTCG.Test
         {
             Assert.AreEqual(2,new CardReps().getLastpackageId());
         }
-        
+        /*
         [Test]
         public void TestShouldDeleteCard()
         {
             Assert.IsTrue(new CardReps().deleteCardsByUsername("user1"));
-        }
+        }*/
     }
 }

@@ -14,9 +14,7 @@ namespace MTCG.Test
         [SetUp]
         public void Setup() 
         {
-            Database.GetInstance().truncateUsersTable();
-            new UserReps().addUser("user1", "1234");
-            new UserReps().addUser("user2", "1234");
+            TestHelper.insertUsers();
         }
 
         [Test]
