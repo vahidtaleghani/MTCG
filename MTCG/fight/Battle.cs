@@ -7,9 +7,9 @@ using System.Linq;
 
 namespace MTCG.endpoints.battle
 {
-    public class BattleController
+    public class Battle
     {
-        private static BattleController instance = null;
+        private static Battle instance = null;
         private static String Lock = "lock";
         private List<String> playerList = new List<String>();
         DateTime startTime;
@@ -20,15 +20,16 @@ namespace MTCG.endpoints.battle
         public int i = 0;
         private int eloPlayer1BeforeFight;
         private int eloPlayer2BeforeFight;
+        private bool is_played = false;
 
 
-        private BattleController(){ }
-        public static BattleController getInstance()
+        private Battle(){ }
+        public static Battle getInstance()
         {
             lock (Lock)
             {
                 if (instance == null)
-                    instance = new BattleController();
+                    instance = new Battle();
             }
             return instance;
         }
@@ -50,6 +51,8 @@ namespace MTCG.endpoints.battle
             {
                 if (playerList.Count == 2)
                 {
+                    this.is_played = true;
+
                     this.player1 = playerList.ElementAt(0);
                     this.player2 = playerList.ElementAt(1);
                     eloPlayer1BeforeFight = new StatReps().getStatsByUsername(this.player1).elo;
@@ -115,6 +118,10 @@ namespace MTCG.endpoints.battle
             else
                 this.lastResult = "DRAW";
             return this.lastResult;
+        }
+        public bool isPlayed()
+        {
+            return this.is_played;
         }
     }
 }

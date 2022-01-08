@@ -13,12 +13,12 @@ namespace MTCG.endpoints.battle
                     return Element_Type.Water;
                 case "Fire":
                     return Element_Type.Fire;
-                case "Regular":
-                    return Element_Type.Regular;
                 default:
                     return Element_Type.Regular;
             }
         }
+
+        // water->fire && fire->normal && normal->water
         public int checkElementType(Element_Type player1, Element_Type player2)
         {
             switch (player1)

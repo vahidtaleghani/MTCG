@@ -28,14 +28,14 @@ namespace MTCG.endpoints.battle
                     return ResponseCreator.forbidden("This user does not have 4 Card in Deck");
 
                 // Kontrolliert, dass der user nur einmal angefordert hat
-                if (!BattleController.getInstance().addPlayer(username))
-                    return ResponseCreator.badRequest("You are already in a Tournament");
+                if (!Battle.getInstance().addPlayer(username))
+                    return ResponseCreator.badRequest("This user already in a Tournament");
         
-                while (BattleController.getInstance().isInProgress())
+                while (Battle.getInstance().isInProgress())
                 {
                     try
                     {
-                        Thread.Sleep(200);
+                        Thread.Sleep(400);
                     }
                     catch (Exception exc)
                     {
@@ -43,9 +43,9 @@ namespace MTCG.endpoints.battle
                     }
                 }
 
-                // Tournament ist fertig und detailliertes Protokoll erhalten und zurückgeben
-                //return ResponseCreator.okJsonPayload("OK");
-                return ResponseCreator.okJsonPayload(BattleController.getInstance().getLastResult());
+                if(Battle.getInstance().isPlayed())
+                    return ResponseCreator.okJsonPayload(Battle.getInstance().getLastResult());
+                return ResponseCreator.forbidden("No User ready to play");
 
             }
             catch (Exception)

@@ -14,8 +14,7 @@ namespace MTCG.endpoints.battle.play
                 return 1;
             else if ((Player1 * 2) < (Player2 / 2))
                 return -1;
-            else
-                return 0;
+            return 0;
         }
     }
 }
