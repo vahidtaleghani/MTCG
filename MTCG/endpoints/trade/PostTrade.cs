@@ -49,7 +49,7 @@ namespace MTCG.endpoints.stats
                             return ResponseCreator.forbidden("This Card is on deck");
                     }
                     if (!new TradeReps().addCardToStore(user, this.reqTrade.Id, this.reqTrade.CardToTrade, this.reqTrade.Type, this.reqTrade.MinimumDamage))
-                        return ResponseCreator.jsonInvalid("User could not be updated");
+                        return ResponseCreator.serverError("User could not be updated");
                     Console.WriteLine(user + " added card with id : " + this.reqTrade.Id + " , Card To Trade: " + this.reqTrade.CardToTrade + " Type: " + this.reqTrade.Type + " and MinimumDamage:" + this.reqTrade.MinimumDamage);
                 }
                 catch (Exception)

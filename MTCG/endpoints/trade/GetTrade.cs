@@ -31,7 +31,7 @@ namespace MTCG.endpoints.trade
                     List<Trade> trade = new TradeReps().getAllCardInStore();
 
                     if (trade == null)
-                        return ResponseCreator.serverError("Store is empty");
+                        return ResponseCreator.ok("Store is empty");
                     String jsonString = JsonConvert.SerializeObject(trade);
                     return ResponseCreator.okJsonPayload(jsonString);
                 }

@@ -17,7 +17,7 @@ namespace MTCG.data.repository
         }
         public List<Trade> getAllCardInStore()
         {
-            string query = string.Format("SELECT * from store where was_stored = false");
+            string query = string.Format("SELECT * from store where is_sold = false");
             List<Trade> userlist = new List<Trade>();
 
             try
@@ -32,7 +32,7 @@ namespace MTCG.data.repository
                         dataReader["card_trade_id"].ToString(),
                         dataReader["card_type"].ToString(),
                         Convert.ToDouble(dataReader["min_damage"]),
-                        Convert.ToBoolean(dataReader["was_stored"])
+                        Convert.ToBoolean(dataReader["is_sold"])
                         ));
                 }
             }
@@ -44,7 +44,7 @@ namespace MTCG.data.repository
         }
         public bool addCardToStore(String username, String id, String card_trade_id, String card_type, double min_damage)
         {
-            string query = string.Format("INSERT INTO store (username, id ,card_trade_id ,card_type ,min_damage, was_stored) " +
+            string query = string.Format("INSERT INTO store (username, id ,card_trade_id ,card_type ,min_damage, is_sold) " +
                 "VALUES ('{0}','{1}', '{2}','{3}','{4}','{5}')",
                 username, id, card_trade_id, card_type, min_damage, false);
             try
@@ -62,7 +62,7 @@ namespace MTCG.data.repository
         }
         public Trade getTradeById(String id)
         {
-            string query = string.Format("select * from store where id='{0}' and was_stored = false", id);
+            string query = string.Format("select * from store where id='{0}' and is_sold = false", id);
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
@@ -75,7 +75,7 @@ namespace MTCG.data.repository
                         dataReader["card_trade_id"].ToString(),
                         dataReader["card_type"].ToString(),
                         Convert.ToDouble(dataReader["min_damage"]),
-                        Convert.ToBoolean(dataReader["was_stored"])
+                        Convert.ToBoolean(dataReader["is_sold"])
                         );
                 }
             }
@@ -87,7 +87,7 @@ namespace MTCG.data.repository
         }
         public bool updateStoredById(String id)
         {
-            string query = string.Format("UPDATE store SET was_stored=true WHERE id='{0}'", id);
+            string query = string.Format("UPDATE store SET is_sold=true WHERE id='{0}'", id);
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);

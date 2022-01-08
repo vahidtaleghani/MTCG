@@ -37,7 +37,7 @@ namespace MTCG
             endpointList.Add(new PostBattle());
             endpointList.Add(new GetTrade());
             endpointList.Add(new PostTrade());
-            endpointList.Add(new PostTakeCard());
+            endpointList.Add(new PostٍExchangeCard());
             endpointList.Add(new DeleteTrade());
         }
 
