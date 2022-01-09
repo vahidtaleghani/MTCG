@@ -13,7 +13,7 @@ namespace MTCG.data.repository
         private NpgsqlConnection NpgsqlConn;
         public TradeReps()
         {
-            this.NpgsqlConn = new NpgsqlConn().getnpgsqlConn();
+            this.NpgsqlConn = new NpgsqlConn().getNpgsqlConn();
         }
         public List<Trade> getAllCardInStore()
         {

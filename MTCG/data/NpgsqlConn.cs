@@ -11,7 +11,7 @@ namespace MTCG.data
     public class NpgsqlConn
     {
         public NpgsqlConnection npgsqlConn;
-        public NpgsqlConnection getnpgsqlConn()
+        public NpgsqlConnection getNpgsqlConn()
         {
             return npgsqlConn;
         }

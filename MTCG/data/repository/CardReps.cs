@@ -11,7 +11,7 @@ namespace MTCG.repository
         private NpgsqlConnection NpgsqlConn;
         public CardReps()
         {
-            this.NpgsqlConn = new NpgsqlConn().getnpgsqlConn();
+            this.NpgsqlConn = new NpgsqlConn().getNpgsqlConn();
         }
         public Card getCardById(String id)
         {

@@ -15,7 +15,7 @@ namespace MTCG.repository
         private NpgsqlConnection NpgsqlConn;
         public StatReps()
         {
-            this.NpgsqlConn = new NpgsqlConn().getnpgsqlConn();
+            this.NpgsqlConn = new NpgsqlConn().getNpgsqlConn();
         }
         public Stat getStatsByUsername(String username)
         {

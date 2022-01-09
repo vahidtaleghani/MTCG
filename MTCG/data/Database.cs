@@ -55,7 +55,7 @@ namespace MTCG.repository
             String query = "truncate table users cascade";
             try
             {
-                NpgsqlCommand command = new NpgsqlCommand(query, new NpgsqlConn().getnpgsqlConn());
+                NpgsqlCommand command = new NpgsqlCommand(query, new NpgsqlConn().getNpgsqlConn());
                 NpgsqlDataReader dataReader = command.ExecuteReader();
             }
             catch (Exception exc)
@@ -68,7 +68,7 @@ namespace MTCG.repository
             String query = "truncate table cards cascade";
             try
             {
-                NpgsqlCommand command = new NpgsqlCommand(query, new NpgsqlConn().getnpgsqlConn());
+                NpgsqlCommand command = new NpgsqlCommand(query, new NpgsqlConn().getNpgsqlConn());
                 NpgsqlDataReader dataReader = command.ExecuteReader();
             }
             catch (Exception exc)

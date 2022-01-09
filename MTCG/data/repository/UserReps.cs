@@ -13,7 +13,7 @@ namespace MTCG.repository
         private int coin;
         public UserReps()
         {
-            this.NpgsqlConn = new NpgsqlConn().getnpgsqlConn();
+            this.NpgsqlConn = new NpgsqlConn().getNpgsqlConn();
         }
         public User getUser(String username)
         {
