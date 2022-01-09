@@ -27,7 +27,7 @@ unit testing:
 Unit Test für Battle Part und Database Repository geschrieben.Die Unit-Tests für das battle prüfen verschiedene Ergebnisse in Abhängigkeit von verschiedenen Eingaben und stellen sicher, dass das Projekt und die Kampflogik unter allen Umständen funktionieren, bevor es eingesetzt wird.
 Unit-Tests dieser Methoden sind von entscheidender Bedeutung, da sie uns die Zeit ersparen, alle Möglichkeiten manuell zu prüfen, und sie machen das Projekt zuverlässig. Sie helfen uns auch, uns alle möglichen Ergebnisse vorzustellen, so dass wir herausfinden können, ob der Code irgendeine Art von Fehler oder Inkonsistenzen hat.
 
-Estimated time:
+Geschätzte Zeit:
  ___________________________________________________
 | 						    |
 | Datenbank-Design:                   ~ 5 hours     |
