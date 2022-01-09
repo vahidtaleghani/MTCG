@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MTCG.data;
 using Npgsql;
 
 namespace MTCG.repository
@@ -54,7 +55,7 @@ namespace MTCG.repository
             String query = "truncate table users cascade";
             try
             {
-                NpgsqlCommand command = new NpgsqlCommand(query, NpgsqlConn);
+                NpgsqlCommand command = new NpgsqlCommand(query, new NpgsqlConn().getnpgsqlConn());
                 NpgsqlDataReader dataReader = command.ExecuteReader();
             }
             catch (Exception exc)
@@ -67,7 +68,7 @@ namespace MTCG.repository
             String query = "truncate table cards cascade";
             try
             {
-                NpgsqlCommand command = new NpgsqlCommand(query, NpgsqlConn);
+                NpgsqlCommand command = new NpgsqlCommand(query, new NpgsqlConn().getnpgsqlConn());
                 NpgsqlDataReader dataReader = command.ExecuteReader();
             }
             catch (Exception exc)

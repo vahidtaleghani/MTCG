@@ -79,8 +79,8 @@ namespace MTCG.Test
 
             new TwoMonsterCards().handleBattle(card1, card2);
 
-            Assert.AreEqual(90, new StatReps().getStatsByUsername("user1").elo);
-            Assert.AreEqual(106, new StatReps().getStatsByUsername("user2").elo);
+            Assert.AreEqual(95, new StatReps().getStatsByUsername("user1").elo);
+            Assert.AreEqual(103, new StatReps().getStatsByUsername("user2").elo);
         }
 
         [Test]
@@ -103,8 +103,8 @@ namespace MTCG.Test
 
             new TwoSpellCards().handleBattle(card1, card2);
 
-            Assert.AreEqual(93, new StatReps().getStatsByUsername("user1").elo);
-            Assert.AreEqual(101, new StatReps().getStatsByUsername("user2").elo);
+            Assert.AreEqual(103, new StatReps().getStatsByUsername("user1").elo);
+            Assert.AreEqual(95, new StatReps().getStatsByUsername("user2").elo);
         }
     }
 }

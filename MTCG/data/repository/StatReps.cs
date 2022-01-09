@@ -17,22 +17,6 @@ namespace MTCG.repository
         {
             this.NpgsqlConn = new NpgsqlConn().getnpgsqlConn();
         }
-        public bool addStat(String username)
-        {
-            string statquery = string.Format("INSERT INTO stats (username) " + "VALUES ('{0}')", username);
-            try
-            {
-                NpgsqlCommand statCommand = new NpgsqlCommand(statquery, this.NpgsqlConn);
-                int statDataReader = statCommand.ExecuteNonQuery();
-                if (statDataReader == 0)
-                    return false;
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
         public Stat getStatsByUsername(String username)
         {
             string query = string.Format("select * from stats where username='{0}'", username);

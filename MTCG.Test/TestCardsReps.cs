@@ -57,7 +57,7 @@ namespace MTCG.Test
         [Test]
         public void TestFirstFreePackageId()
         {
-            Assert.AreEqual(2, new CardReps().getFirstFreePackageId());
+            Assert.AreEqual(1, new CardReps().getFirstFreePackageId());
         }
 
         [Test]
@@ -65,11 +65,79 @@ namespace MTCG.Test
         {
             Assert.AreEqual(2,new CardReps().getLastpackageId());
         }
-        /*
+       
         [Test]
-        public void TestShouldDeleteCard()
+        public void TestDeleteCard()
         {
+            Assert.IsTrue(new CardReps().updateUsernameOfCards("user1", 1));
             Assert.IsTrue(new CardReps().deleteCardsByUsername("user1"));
-        }*/
+        }
+
+        [Test]
+        public void TestgetAllCardsByUsername()
+        {
+            Assert.IsTrue(new CardReps().updateUsernameOfCards("user1", 1));
+
+            List<Card> cardList = new CardReps().getAllCardsByUsername("user1");
+
+            Assert.IsNotNull(cardList);
+            Assert.AreEqual(3, cardList.Count);
+        }
+
+        [Test]
+        public void TestUpdateDeckByUsername()
+        {
+            Assert.IsTrue(new CardReps().updateUsernameOfCards("user1", 1));
+            Card card = new CardReps().getCardById("1");
+            Assert.IsFalse(card.deck);
+
+            Assert.IsTrue(new CardReps().updateDeckByUsername("1","user1"));
+
+            Card newCard = new CardReps().getCardById("1");
+            Assert.IsTrue(newCard.deck);
+        }
+
+        [Test]
+        public void TestControlCardBelongeToUsername()
+        {
+            Card card = new CardReps().getCardById("1");
+            Assert.IsEmpty(card.username);
+            Assert.IsFalse(card.deck);
+
+            Assert.IsTrue(new CardReps().updateUsernameOfCards("user1", 1));
+
+            Card newCard = new CardReps().getCardById("1");
+            Assert.AreEqual("user1",newCard.username);
+        }
+
+        [Test]
+        public void TestUpdateDeckByUsernameAfterPlay()
+        {
+            Assert.IsTrue(new CardReps().updateUsernameOfCards("user1", 1));
+            Assert.IsTrue(new CardReps().updateDeckByUsername("1", "user1"));
+            Card card = new CardReps().getCardById("1");
+            Assert.IsTrue(card.deck);
+
+            Assert.IsTrue(new CardReps().updateDeckByUsernameAfterPlay("1", "user1"));
+
+            Card newCard = new CardReps().getCardById("1");
+            Assert.IsFalse(newCard.deck);
+        }
+
+        [Test]
+        public void TestUpdateCardByUsername()
+        {
+            Assert.IsTrue(new CardReps().updateUsernameOfCards("user1", 1));
+            Assert.IsTrue(new CardReps().updateDeckByUsername("1", "user1"));
+            Card card = new CardReps().getCardById("1");
+            Assert.AreEqual("user1",card.username);
+            Assert.IsTrue(card.deck);
+
+            Assert.IsTrue(new CardReps().updateCardByUsername("1", "user2"));
+
+            Card newCard = new CardReps().getCardById("1");
+            Assert.IsFalse(newCard.deck);
+            Assert.AreEqual("user2", newCard.username);
+        }
     }
 }
