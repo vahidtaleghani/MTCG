@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>02e73287-84ef-4773-ad56-7bc231f3e95d.TABLE:mtcg.public.cards</OriginalElement>
+  <nodes>
+    <node x="0.0" y="237.0">02e73287-84ef-4773-ad56-7bc231f3e95d.TABLE:mtcg.public.store</node>
+    <node x="217.0" y="248.0">02e73287-84ef-4773-ad56-7bc231f3e95d.TABLE:mtcg.public.stats</node>
+    <node x="393.0" y="0.0">02e73287-84ef-4773-ad56-7bc231f3e95d.TABLE:mtcg.public.cards</node>
+    <node x="125.0" y="0.0">02e73287-84ef-4773-ad56-7bc231f3e95d.TABLE:mtcg.public.users</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="02e73287-84ef-4773-ad56-7bc231f3e95d.TABLE:mtcg.public.store" target="02e73287-84ef-4773-ad56-7bc231f3e95d.TABLE:mtcg.public.users" relationship="REFERENCES">
+      <point x="0.0" y="-82.0" />
+      <point x="98.5" y="212.0" />
+      <point x="190.5" y="212.0" />
+      <point x="0.0" y="93.5" />
+    </edge>
+    <edge source="02e73287-84ef-4773-ad56-7bc231f3e95d.TABLE:mtcg.public.stats" target="02e73287-84ef-4773-ad56-7bc231f3e95d.TABLE:mtcg.public.users" relationship="REFERENCES">
+      <point x="0.0" y="-71.0" />
+      <point x="282.5" y="212.0" />
+      <point x="190.5" y="212.0" />
+      <point x="0.0" y="93.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="281.5" y="200.5" />
+  <SelectedNodes>
+    <node>02e73287-84ef-4773-ad56-7bc231f3e95d.TABLE:mtcg.public.cards</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
