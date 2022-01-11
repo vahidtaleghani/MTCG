@@ -35,7 +35,7 @@ namespace MTCG.endpoints.battle
                 {
                     try
                     {
-                        Thread.Sleep(400);
+                        Thread.Sleep(1000);
                     }
                     catch (Exception exc)
                     {

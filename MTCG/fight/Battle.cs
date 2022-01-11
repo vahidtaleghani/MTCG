@@ -109,6 +109,7 @@ namespace MTCG.endpoints.battle
         }
         public String getLastResult()
         {
+            playerList.Clear();
             int eloPlayer1AfterFight = new StatReps().getStatsByUsername(this.player1).elo;
             int eloPlayer2AfterFight = new StatReps().getStatsByUsername(this.player2).elo;
             if (eloPlayer1AfterFight - this.eloPlayer1BeforeFight > eloPlayer2AfterFight - this.eloPlayer2BeforeFight)
