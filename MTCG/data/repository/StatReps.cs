@@ -19,10 +19,12 @@ namespace MTCG.repository
         }
         public Stat getStatsByUsername(String username)
         {
-            string query = string.Format("select * from stats where username='{0}'", username);
+            string query = string.Format("select * from stats where username=@username");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("username", username);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 NpgsqlDataReader dataReader = command.ExecuteReader();
                 while (dataReader.Read())
                     return new Stat(
@@ -44,12 +46,13 @@ namespace MTCG.repository
             string query = string.Format("SELECT users.username, users.name, users.bio, users.image, users.coin , " +
                 "stats.elo, stats.win, stats.lose, stats.draw, sum(stats.win + stats.lose + stats.draw) as sumPlay " +
                 "FROM stats INNER JOIN users ON stats.username = users.username " +
-                "where users.username='{0}' " +
-                "group by users.username, users.name, users.bio, users.image, users.coin, stats.elo, stats.win, stats.lose, stats.draw",
-                username);
+                "where users.username=@username " +
+                "group by users.username, users.name, users.bio, users.image, users.coin, stats.elo, stats.win, stats.lose, stats.draw");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("username", username);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 NpgsqlDataReader dataReader = command.ExecuteReader();
                 while (dataReader.Read())
                     return new StatsUser(
@@ -107,10 +110,12 @@ namespace MTCG.repository
         }
         public bool updateStatWinnerByUsernameAfterPlay(String username)
         {
-            string query = string.Format("UPDATE stats SET elo=elo+3, win = win+1 where username='{0}'", username);
+            string query = string.Format("UPDATE stats SET elo=elo+3, win = win+1 where username=@username");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("username", username);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 int dataReader = command.ExecuteNonQuery();
                 if (dataReader == 0)
                     return false;
@@ -123,10 +128,12 @@ namespace MTCG.repository
         }
         public bool updateStatLoserByUsernameAfterPlay(String username)
         {
-            string query = string.Format("UPDATE stats SET elo=elo-5 , lose = lose+1 where username='{0}'", username);
+            string query = string.Format("UPDATE stats SET elo=elo-5 , lose = lose+1 where username=@username");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("username", username);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 int dataReader = command.ExecuteNonQuery();
                 if (dataReader == 0)
                     return false;
@@ -139,10 +146,12 @@ namespace MTCG.repository
         }
         public bool updateStatDrawByUsernameAfterPlay(String username)
         {
-            string query = string.Format("UPDATE stats SET draw=draw+1 where username='{0}'", username);
+            string query = string.Format("UPDATE stats SET draw=draw+1 where username=@username");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("username", username);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 int dataReader = command.ExecuteNonQuery();
                 if (dataReader == 0)
                     return false;

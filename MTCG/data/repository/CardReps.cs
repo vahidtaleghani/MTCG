@@ -15,10 +15,12 @@ namespace MTCG.repository
         }
         public Card getCardById(String id)
         {
-            string query = string.Format("SELECT * from cards where id='{0}'", id);
+            string query = string.Format("SELECT * from cards where id=@id");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("id", id);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 NpgsqlDataReader dataReader = command.ExecuteReader();
                 while (dataReader.Read())
                     return new Card(
@@ -40,11 +42,13 @@ namespace MTCG.repository
         }
         public List<Card> getAllCardsByUsername(String username)
         {
-            string query = string.Format("SELECT * from cards where username='{0}'", username);
+            string query = string.Format("SELECT * from cards where username=@username", username);
             List<Card> cardlist = new List<Card>();
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("username", username);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 NpgsqlDataReader dataReader = command.ExecuteReader();
                 while (dataReader.Read())
                     cardlist.Add(new Card(
@@ -64,21 +68,35 @@ namespace MTCG.repository
             }
             return cardlist;
         }
-        public bool addCard(String id, String name, String element_type , String card_type ,float damage, int packageId)
+        public bool addCard(String id, String name, String element_type , String card_type ,double damage, int packageId)
         {
-            string query = string.Format("INSERT INTO cards (id, name ,element_type ,card_type ,damage, package_id , username , deck) " +
-                "VALUES ('{0}','{1}', '{2}','{3}','{4}','{5}','{6}','{7}')",
-                id, name,element_type,card_type , damage, packageId, null, false);
+            string query = string.Format("INSERT INTO cards (id, name ,element_type ,card_type ,damage, package_id, username) " +
+                "VALUES (@id,@name, @element_type,@card_type,@damage,@package_id, @username)");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("id", id);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
+                command.Parameters.AddWithValue("name", name);
+                command.Parameters[1].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
+                command.Parameters.AddWithValue("element_type", element_type);
+                command.Parameters[2].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
+                command.Parameters.AddWithValue("card_type", card_type);
+                command.Parameters[3].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
+                command.Parameters.AddWithValue("damage", damage);
+                command.Parameters[4].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Double;
+                command.Parameters.AddWithValue("package_id", packageId);
+                command.Parameters[5].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Integer;
+                command.Parameters.AddWithValue("username", "");
+                command.Parameters[6].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 int dataReader = command.ExecuteNonQuery();
                 if (dataReader == 0)
                     return false;
                 return true;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                Console.WriteLine(exc);
                 return false;
             }
         }
@@ -100,10 +118,14 @@ namespace MTCG.repository
         }
         public bool updateUsernameOfCards(String username, int packageId)
         {
-            string query = string.Format("UPDATE cards SET username='{0}' WHERE package_id='{1}'", username, packageId);
+            string query = string.Format("UPDATE cards SET username=@username WHERE package_id=@package_id");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("username", username);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
+                command.Parameters.AddWithValue("package_id", packageId);
+                command.Parameters[1].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Integer;
                 int dataReader = command.ExecuteNonQuery();
                 if (dataReader == 0)
                     return false;
@@ -132,12 +154,14 @@ namespace MTCG.repository
         }
         public List<Card> getDeckByUsername(String username)
         {
-            string query = string.Format("SELECT * from cards where username='{0}' and deck = true", username);
+            string query = string.Format("SELECT * from cards where username=@username and deck = true");
             List<Card> cardlist = new List<Card>();
             try
             {
 
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("username", username);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 NpgsqlDataReader dataReader = command.ExecuteReader();
                 while (dataReader.Read())
                     cardlist.Add(new Card(
@@ -159,10 +183,14 @@ namespace MTCG.repository
         }
         public bool updateDeckByUsername(String id, string username)
         {
-            string query = string.Format("UPDATE cards SET deck=true WHERE username='{0}' and id='{1}'", username, id);
+            string query = string.Format("UPDATE cards SET deck=true WHERE username=@username and id=@id");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("username", username);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
+                command.Parameters.AddWithValue("id", id);
+                command.Parameters[1].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 int dataReader = command.ExecuteNonQuery();
                 if (dataReader == 0)
                     return false;
@@ -175,10 +203,14 @@ namespace MTCG.repository
         }
         public bool ControlCardByUsername(String id, string username)
         {
-            string query = string.Format("SELECT * from cards WHERE username='{0}' and id='{1}' and deck =false", username, id);
+            string query = string.Format("SELECT * from cards WHERE username=@username and id=@id and deck =false");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("username", username);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
+                command.Parameters.AddWithValue("id", id);
+                command.Parameters[1].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 NpgsqlDataReader dataReader = command.ExecuteReader();
                 if (dataReader.Read() ==false)
                     return false;
@@ -191,10 +223,14 @@ namespace MTCG.repository
         }
         public bool ControlCardBelongeToUsername(String id, string username)
         {
-            string query = string.Format("SELECT * from cards WHERE username='{0}' and id='{1}'", username, id);
+            string query = string.Format("SELECT * from cards WHERE username=@username and id=@id");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("username", username);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
+                command.Parameters.AddWithValue("id", id);
+                command.Parameters[1].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 NpgsqlDataReader dataReader = command.ExecuteReader();
                 if (dataReader.Read() == false)
                     return false;
@@ -207,10 +243,14 @@ namespace MTCG.repository
         }
         public bool updateDeckByUsernameAfterPlay(String id, string username)
         {
-            string query = string.Format("UPDATE cards SET deck=false WHERE username='{0}' and id='{1}'", username, id);
+            string query = string.Format("UPDATE cards SET deck=false WHERE username=@username and id=@id");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("username", username);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
+                command.Parameters.AddWithValue("id", id);
+                command.Parameters[1].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 int dataReader = command.ExecuteNonQuery();
                 if (dataReader == 0)
                     return false;
@@ -223,10 +263,14 @@ namespace MTCG.repository
         }
         public bool updateCardByUsername(String id, string username)
         {
-            string query = string.Format("UPDATE cards SET deck=false , username='{0}' where id='{1}'", username, id);
+            string query = string.Format("UPDATE cards SET deck=false , username=@username where id=@id");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("username", username);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
+                command.Parameters.AddWithValue("id", id);
+                command.Parameters[1].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 int dataReader = command.ExecuteNonQuery();
                 if (dataReader == 0)
                     return false;
@@ -239,10 +283,12 @@ namespace MTCG.repository
         }
         public bool deleteCardsByUsername(String username)
         {
-            string query = string.Format("DELETE from cards where username='{0}'", username);
+            string query = string.Format("DELETE from cards where username=@username");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
+                command.Parameters.AddWithValue("username", username);
+                command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 int dataReader = command.ExecuteNonQuery();
 
                 if (dataReader != 0)

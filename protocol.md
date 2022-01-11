@@ -34,7 +34,7 @@ Was ich gelernt habe:
 - Organisierung und Planung vor dem Start des Projekts 
 - Http Request and Response Methode
 - Unit- und Integrationstest
-- Dtabase in C#
+- Database in C#
 
 Geschätzte Zeit:
  ___________________________________________________
