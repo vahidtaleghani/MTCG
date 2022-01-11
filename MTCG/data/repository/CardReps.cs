@@ -42,7 +42,7 @@ namespace MTCG.repository
         }
         public List<Card> getAllCardsByUsername(String username)
         {
-            string query = string.Format("SELECT * from cards where username=@username", username);
+            string query = string.Format("SELECT * from cards where username=@username");
             List<Card> cardlist = new List<Card>();
             try
             {
@@ -203,7 +203,7 @@ namespace MTCG.repository
         }
         public bool ControlCardByUsername(String id, string username)
         {
-            string query = string.Format("SELECT * from cards WHERE username=@username and id=@id and deck =false");
+            string query = string.Format("SELECT * from cards WHERE username=@username and id=@id and deck =@deck");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
@@ -211,6 +211,8 @@ namespace MTCG.repository
                 command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 command.Parameters.AddWithValue("id", id);
                 command.Parameters[1].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
+                command.Parameters.AddWithValue("deck", false);
+                command.Parameters[2].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Boolean;
                 NpgsqlDataReader dataReader = command.ExecuteReader();
                 if (dataReader.Read() ==false)
                     return false;
@@ -243,7 +245,7 @@ namespace MTCG.repository
         }
         public bool updateDeckByUsernameAfterPlay(String id, string username)
         {
-            string query = string.Format("UPDATE cards SET deck=false WHERE username=@username and id=@id");
+            string query = string.Format("UPDATE cards SET deck=@deck WHERE username=@username and id=@id");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
@@ -251,6 +253,8 @@ namespace MTCG.repository
                 command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 command.Parameters.AddWithValue("id", id);
                 command.Parameters[1].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
+                command.Parameters.AddWithValue("deck", false);
+                command.Parameters[2].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Boolean;
                 int dataReader = command.ExecuteNonQuery();
                 if (dataReader == 0)
                     return false;
@@ -263,7 +267,7 @@ namespace MTCG.repository
         }
         public bool updateCardByUsername(String id, string username)
         {
-            string query = string.Format("UPDATE cards SET deck=false , username=@username where id=@id");
+            string query = string.Format("UPDATE cards SET deck=@deck , username=@username where id=@id");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
@@ -271,6 +275,8 @@ namespace MTCG.repository
                 command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
                 command.Parameters.AddWithValue("id", id);
                 command.Parameters[1].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
+                command.Parameters.AddWithValue("deck", false);
+                command.Parameters[2].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Boolean;
                 int dataReader = command.ExecuteNonQuery();
                 if (dataReader == 0)
                     return false;

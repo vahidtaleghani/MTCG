@@ -73,12 +73,14 @@ namespace MTCG.data.repository
         }
         public Trade getTradeById(String id)
         {
-            string query = string.Format("select * from store where id=@id and is_sold = false");
+            string query = string.Format("select * from store where id=@id and is_sold = @is_sold");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
                 command.Parameters.AddWithValue("id", id);
                 command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
+                command.Parameters.AddWithValue("is_sold", false);
+                command.Parameters[1].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Boolean;
                 NpgsqlDataReader dataReader = command.ExecuteReader();
                 while (dataReader.Read())
                 {
@@ -100,12 +102,14 @@ namespace MTCG.data.repository
         }
         public bool updateStoredById(String id)
         {
-            string query = string.Format("UPDATE store SET is_sold=true WHERE id=@id");
+            string query = string.Format("UPDATE store SET is_sold=@is_sold WHERE id=@id");
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(query, this.NpgsqlConn);
                 command.Parameters.AddWithValue("id", id);
                 command.Parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Varchar;
+                command.Parameters.AddWithValue("is_sold", false);
+                command.Parameters[1].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Boolean;
                 int dataReader = command.ExecuteNonQuery();
                 if (dataReader == 0)
                     return false;
